@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrek Adventures – Let's Go Hiking Zambia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1a3a2a;--deep:#0d2218;--moss:#2d5a3d;--leaf:#6db87a;--gold:#d4a843;--amber:#e8c06a;--white:#faf7f2;--muted:#6b8a74;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);min-height:100vh;overflow-x:hidden;}
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+/* LOGO */
+.logo{display:flex;align-items:center;}
+.logo-img{height:52px;width:auto;object-fit:contain;border-radius:6px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));}
+.logo-img-auth{height:90px;width:auto;object-fit:contain;border-radius:8px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));}
+
+/* LANDING NAV */
+.land-nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:28px 60px;background:linear-gradient(to bottom,rgba(13,34,24,.75) 0%,transparent 100%);}
+.land-nav-btns{display:flex;gap:12px;}
+.btn-outline{padding:10px 24px;border:1.5px solid rgba(109,184,122,.5);background:transparent;color:var(--leaf);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;border-radius:50px;cursor:pointer;transition:all .3s;}
+.btn-outline:hover{background:rgba(109,184,122,.1);color:var(--white);}
+.btn-solid{padding:10px 24px;border:1.5px solid var(--gold);background:var(--gold);color:var(--deep);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;border-radius:50px;cursor:pointer;transition:all .3s;}
+.btn-solid:hover{background:var(--amber);transform:translateY(-1px);}
+
+/* HERO CAROUSEL */
+.hero-carousel-wrap{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;}
+.carousel-track{display:flex;height:100%;transition:transform .9s cubic-bezier(.4,0,.2,1);}
+.carousel-slide{min-width:100%;height:100vh;min-height:600px;position:relative;flex-shrink:0;}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+.carousel-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,34,24,.92) 0%,rgba(13,34,24,.4) 50%,rgba(13,34,24,.1) 100%);}
+.slide-caption{position:absolute;bottom:100px;left:50px;z-index:5;}
+.slide-caption-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.slide-caption-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--white);line-height:1.2;max-width:500px;}
+.slide-caption-sub{font-size:14px;color:rgba(250,247,242,.65);margin-top:6px;}
+.hero-content{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 40px 200px;pointer-events:none;}
+.hero-content .land-cta{pointer-events:all;}
+.land-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(109,184,122,.12);border:1px solid rgba(109,184,122,.3);border-radius:50px;padding:6px 16px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);letter-spacing:2px;text-transform:uppercase;}
+.land-badge::before{content:'';width:6px;height:6px;background:var(--leaf);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.hero-main-title{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,82px);font-weight:900;line-height:1.05;letter-spacing:-1px;color:var(--white);margin-bottom:20px;}
+.hero-main-title em{color:var(--gold);font-style:italic;}
+.land-desc{max-width:540px;font-size:17px;font-weight:300;color:rgba(250,247,242,.75);line-height:1.7;margin-bottom:40px;}
+.land-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.btn-hero{padding:16px 40px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-hero-primary{background:var(--gold);border:2px solid var(--gold);color:var(--deep);}
+.btn-hero-primary:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,168,67,.4);}
+.btn-hero-secondary{background:rgba(250,247,242,.08);border:2px solid rgba(250,247,242,.3);color:var(--white);backdrop-filter:blur(6px);}
+.btn-hero-secondary:hover{border-color:rgba(250,247,242,.6);background:rgba(250,247,242,.15);}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:20;background:rgba(13,34,24,.45);border:1px solid rgba(250,247,242,.2);color:var(--white);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:all .3s;backdrop-filter:blur(8px);}
+.carousel-btn:hover{background:rgba(212,168,67,.3);border-color:var(--gold);}
+.carousel-btn-prev{left:24px;}
+.carousel-btn-next{right:24px;}
+.hero-bottom{position:absolute;bottom:28px;left:0;right:0;z-index:20;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.carousel-dots{display:flex;gap:8px;}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(250,247,242,.3);cursor:pointer;transition:all .35s;border:none;padding:0;}
+.carousel-dot.active{background:var(--gold);width:24px;border-radius:4px;}
+.carousel-insta-link{font-family:'Space Mono',monospace;font-size:11px;color:rgba(250,247,242,.45);text-decoration:none;letter-spacing:1px;transition:color .2s;}
+.carousel-insta-link:hover{color:var(--leaf);}
+
+/* STATS & FEATURES */
+.land-stats{position:relative;z-index:5;display:flex;justify-content:center;gap:60px;padding:50px 40px;flex-wrap:wrap;background:var(--deep);}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--gold);line-height:1;}
+.stat-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:6px;font-family:'Space Mono',monospace;}
+.land-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;padding:20px 60px 80px;background:var(--deep);}
+.feat-card{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.15);border-radius:16px;padding:28px;transition:all .3s;}
+.feat-card:hover{transform:translateY(-4px);border-color:rgba(109,184,122,.3);}
+.feat-icon{font-size:28px;margin-bottom:12px;}
+.feat-title{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:8px;}
+.feat-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* AUTH */
+#signup,#login{min-height:100vh;display:none;align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 40%,rgba(45,90,61,.3) 0%,transparent 60%),linear-gradient(135deg,#0d2218 0%,#1a3a2a 100%);padding:40px 20px;}
+#signup.active,#login.active{display:flex;}
+.auth-card{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.2);border-radius:24px;padding:48px 44px;width:100%;max-width:440px;}
+.auth-logo{text-align:center;margin-bottom:24px;}
+.auth-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;text-align:center;margin-bottom:8px;}
+.auth-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:28px;}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:13px;font-weight:500;color:rgba(250,247,242,.7);margin-bottom:7px;}
+.form-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(109,184,122,.2);border-radius:10px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;transition:all .3s;outline:none;}
+.form-input:focus{border-color:var(--leaf);background:rgba(109,184,122,.08);}
+.form-input::placeholder{color:rgba(250,247,242,.3);}
+select.form-input option{background:#1a3a2a;color:var(--white);}
+.btn-full{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:var(--deep);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;margin-top:8px;}
+.btn-full:hover{background:var(--amber);transform:translateY(-1px);}
+.btn-full:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.auth-switch{text-align:center;margin-top:20px;font-size:14px;color:var(--muted);}
+.auth-switch a{color:var(--leaf);cursor:pointer;font-weight:500;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:24px;}
+.back-link:hover{color:var(--leaf);}
+.tc-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;margin-top:4px;}
+.tc-checkbox{width:17px;height:17px;margin-top:2px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+.tc-label{font-size:13px;color:rgba(250,247,242,.65);line-height:1.5;cursor:pointer;}
+.tc-link{color:var(--gold);text-decoration:underline;}
+.error-msg{background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.4);border-radius:8px;padding:10px 14px;font-size:13px;color:#e74c3c;margin-bottom:16px;display:none;}
+.success-msg{background:rgba(109,184,122,.15);border:1px solid rgba(109,184,122,.4);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--leaf);margin-bottom:16px;display:none;}
+.pass-field-wrap{position:relative;}
+.pass-field-wrap .form-input{padding-right:46px;}
+.pass-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;padding:4px;transition:color .2s;line-height:1;}
+.pass-toggle:hover{color:var(--leaf);}
+.forgot-link{display:block;text-align:right;font-size:12px;color:var(--muted);cursor:pointer;margin-top:-10px;margin-bottom:16px;transition:color .2s;}
+.forgot-link:hover{color:var(--gold);}
+
+/* APP */
+#app{display:none;min-height:100vh;background:linear-gradient(180deg,#0d2218 0%,#111d16 100%);flex-direction:column;}
+#app.active{display:flex;}
+.dash-nav{display:flex;justify-content:space-between;align-items:center;padding:0 50px;height:64px;border-bottom:1px solid rgba(109,184,122,.1);background:rgba(13,34,24,.95);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;flex-shrink:0;}
+.dash-nav-center{display:flex;gap:4px;}
+.nav-tab{padding:8px 18px;border-radius:50px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border:1px solid transparent;background:transparent;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px;transition:all .25s;}
+.nav-tab:hover{color:var(--white);background:rgba(255,255,255,.06);}
+.nav-tab.active{color:var(--gold);background:rgba(212,168,67,.1);border-color:rgba(212,168,67,.2);}
+.tab-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:none;}
+.nav-tab.active .tab-dot{display:block;}
+.dash-user{display:flex;align-items:center;gap:12px;}
+.dash-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--white);}
+.dash-username{font-size:14px;color:rgba(250,247,242,.8);}
+.dash-username span{font-weight:600;color:var(--white);}
+.btn-logout{padding:7px 18px;background:transparent;border:1px solid rgba(192,57,43,.4);color:rgba(231,76,60,.8);border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.btn-logout:hover{background:rgba(192,57,43,.1);color:#e74c3c;}
+.app-page{display:none;flex:1;padding:40px 50px 140px;}
+.app-page.active{display:block;}
+.adv-page-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);text-transform:uppercase;letter-spacing:3px;margin-bottom:10px;}
+.adv-page-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1.1;margin-bottom:8px;}
+.adv-page-title .gold{color:var(--gold);}
+.adv-page-sub{color:var(--muted);font-size:15px;max-width:500px;margin-bottom:32px;}
+
+/* ADVENTURE CARDS */
+.adventures-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+.adventure-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(109,184,122,.15);border-radius:20px;overflow:hidden;transition:all .35s;position:relative;}
+.adventure-card:hover{transform:translateY(-6px);border-color:rgba(109,184,122,.4);}
+.adventure-card.selected{border-color:var(--gold);background:rgba(212,168,67,.06);box-shadow:0 0 0 1px var(--gold);}
+.card-image{height:180px;position:relative;overflow:hidden;}
+.card-image img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;}
+.card-badge{position:absolute;top:14px;right:14px;background:rgba(13,34,24,.85);border:1px solid rgba(212,168,67,.4);border-radius:50px;padding:5px 12px;font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);z-index:2;backdrop-filter:blur(8px);}
+.selected-check{position:absolute;top:14px;left:14px;width:28px;height:28px;background:var(--gold);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:14px;z-index:2;animation:popIn .3s ease;}
+.adventure-card.selected .selected-check{display:flex;}
+@keyframes popIn{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
+.card-body{padding:20px 22px 16px;}
+.card-difficulty{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.diff-easy{color:var(--leaf);}
+.diff-moderate{color:var(--amber);}
+.diff-hard{color:#e07b50;}
+.card-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.card-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.meta-row{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(250,247,242,.65);}
+.transport-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.2);border-radius:10px;margin:0 22px 16px;}
+.transport-left{display:flex;align-items:center;gap:10px;}
+.transport-icon{font-size:18px;}
+.transport-label{font-size:13px;font-weight:500;color:var(--white);line-height:1.3;}
+.transport-fee{font-size:11px;color:var(--gold);font-family:'Space Mono',monospace;}
+.transport-toggle{position:relative;width:42px;height:24px;flex-shrink:0;}
+.transport-toggle input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.15);border-radius:24px;cursor:pointer;transition:background .3s;}
+.toggle-track::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:var(--white);border-radius:50%;transition:transform .3s;}
+.transport-toggle input:checked + .toggle-track{background:var(--gold);}
+.transport-toggle input:checked + .toggle-track::before{transform:translateX(18px);background:var(--deep);}
+.card-footer{padding:0 22px 20px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(109,184,122,.1);padding-top:16px;}
+.card-price{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--gold);}
+.card-price span{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;color:var(--muted);}
+.card-price-note{font-size:11px;color:var(--leaf);font-family:'Space Mono',monospace;margin-top:2px;}
+.btn-select{padding:9px 22px;border-radius:50px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .3s;border:1.5px solid rgba(109,184,122,.4);background:transparent;color:var(--leaf);}
+.adventure-card.selected .btn-select{background:var(--gold);border-color:var(--gold);color:var(--deep);}
+
+/* BOOKINGS */
+.empty-state{text-align:center;padding:80px 20px;color:var(--muted);}
+.empty-state .empty-icon{font-size:52px;margin-bottom:16px;}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--white);margin-bottom:8px;}
+.empty-state p{font-size:15px;margin-bottom:24px;}
+.booking-history-list{display:flex;flex-direction:column;gap:14px;}
+.booking-history-item{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.15);border-radius:14px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+.bhi-ref{font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:6px;}
+.bhi-name{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;}
+.bhi-meta{font-size:13px;color:var(--muted);}
+.bhi-amount{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);}
+.bhi-status{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:50px;font-size:11px;font-family:'Space Mono',monospace;}
+.status-confirmed{background:rgba(109,184,122,.12);border:1px solid rgba(109,184,122,.3);color:var(--leaf);}
+.status-pending{background:rgba(212,168,67,.12);border:1px solid rgba(212,168,67,.3);color:var(--gold);}
+
+/* PROFILE */
+.profile-card{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.15);border-radius:20px;padding:36px;max-width:540px;margin-bottom:24px;}
+.profile-avatar-big{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:30px;font-weight:700;margin-bottom:20px;}
+.profile-name{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:4px;}
+.profile-email-text{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.profile-field{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;}
+.profile-field:last-child{border-bottom:none;}
+.profile-field-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace;}
+.profile-field-val{font-size:15px;}
+
+/* BOOKING BAR */
+.booking-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(13,34,24,.95);border-top:1px solid rgba(109,184,122,.2);backdrop-filter:blur(20px);padding:16px 50px;display:flex;justify-content:space-between;align-items:center;z-index:200;transform:translateY(100%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+.booking-bar.visible{transform:translateY(0);}
+.booking-bar-left{display:flex;align-items:center;gap:20px;}
+.booking-count{background:var(--gold);color:var(--deep);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;}
+.booking-info{font-size:14px;}
+.booking-total{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--gold);}
+.booking-sublabel{font-size:12px;color:var(--muted);margin-top:2px;}
+.btn-book-now{padding:14px 36px;background:var(--gold);border:none;border-radius:50px;color:var(--deep);font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;}
+.btn-book-now:hover{background:var(--amber);transform:translateY(-2px);}
+
+/* PAYMENT MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:linear-gradient(145deg,#1a3a2a,#0d2218);border:1px solid rgba(109,184,122,.25);border-radius:24px;padding:40px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;}
+.modal-close{background:rgba(255,255,255,.08);border:none;color:var(--white);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:rgba(255,255,255,.15);}
+.order-summary{background:rgba(255,255,255,.04);border-radius:12px;padding:16px;margin-bottom:24px;}
+.order-summary-title{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:12px;}
+.order-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:14px;}
+.order-item:last-child{border-bottom:none;}
+.order-item-name{color:rgba(250,247,242,.8);}
+.order-item-price{font-family:'Space Mono',monospace;color:var(--gold);}
+.order-total{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(109,184,122,.2);margin-top:8px;font-weight:600;font-size:16px;}
+.order-total-amount{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);}
+.payment-section-title{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:14px;margin-top:20px;}
+.card-number-field{position:relative;}
+.card-icons{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.payment-methods{display:flex;gap:10px;margin-bottom:20px;}
+.payment-method{flex:1;padding:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(109,184,122,.15);border-radius:10px;cursor:pointer;text-align:center;font-size:13px;color:var(--muted);transition:all .2s;font-family:'DM Sans',sans-serif;}
+.payment-method.active{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,.06);}
+.pm-icon{font-size:20px;margin-bottom:4px;}
+
+/* SUCCESS */
+.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;}
+.success-overlay.open{display:flex;}
+.success-card{background:linear-gradient(145deg,#1a3a2a,#0d2218);border:1px solid rgba(109,184,122,.3);border-radius:24px;padding:50px 40px;max-width:460px;width:100%;text-align:center;}
+.success-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--moss),var(--leaf));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px;}
+.success-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;margin-bottom:12px;}
+.success-sub{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:30px;}
+.success-email-preview{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.2);border-radius:12px;padding:20px;text-align:left;margin-bottom:28px;}
+.email-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--leaf);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;}
+.email-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;color:rgba(250,247,242,.7);border-bottom:1px solid rgba(255,255,255,.05);}
+.email-row:last-child{border-bottom:none;}
+.email-row strong{color:var(--white);}
+
+/* ===== ADMIN PANEL ===== */
+#admin{display:none;min-height:100vh;background:#0a1a10;flex-direction:column;}
+#admin.active{display:flex;}
+.admin-nav{display:flex;justify-content:space-between;align-items:center;padding:0 40px;height:60px;background:#0d2218;border-bottom:1px solid rgba(109,184,122,.15);flex-shrink:0;}
+.admin-nav-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold);display:flex;align-items:center;gap:10px;}
+.admin-nav-tabs{display:flex;gap:4px;}
+.admin-tab{padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.admin-tab:hover{color:var(--white);background:rgba(255,255,255,.06);}
+.admin-tab.active{color:var(--gold);background:rgba(212,168,67,.12);}
+.admin-page{display:none;padding:32px 40px 80px;animation:fadeUp .3s ease;}
+.admin-page.active{display:block;}
+.admin-page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+.admin-page-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;}
+.admin-page-title span{color:var(--gold);}
+.btn-admin-add{padding:10px 22px;background:var(--gold);border:none;border-radius:8px;color:var(--deep);font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;display:flex;align-items:center;gap:7px;}
+.btn-admin-add:hover{background:var(--amber);}
+.admin-stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px;}
+.admin-stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.15);border-radius:14px;padding:20px 24px;}
+.admin-stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);}
+.admin-stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-family:'Space Mono',monospace;margin-top:4px;}
+.admin-table-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.12);border-radius:14px;overflow:hidden;}
+.admin-table{width:100%;border-collapse:collapse;}
+.admin-table th{background:rgba(109,184,122,.08);padding:12px 16px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:'Space Mono',monospace;font-weight:400;}
+.admin-table td{padding:14px 16px;font-size:14px;border-top:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+.admin-table tr:hover td{background:rgba(255,255,255,.02);}
+.admin-badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:11px;font-family:'Space Mono',monospace;}
+.badge-paid{background:rgba(109,184,122,.15);color:var(--leaf);border:1px solid rgba(109,184,122,.3);}
+.badge-pending{background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);}
+.badge-easy{color:var(--leaf);}
+.badge-moderate{color:var(--amber);}
+.badge-hard{color:#e07b50;}
+.btn-admin-sm{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;border:1px solid;}
+.btn-edit{background:rgba(212,168,67,.1);border-color:rgba(212,168,67,.3);color:var(--gold);}
+.btn-edit:hover{background:rgba(212,168,67,.2);}
+.btn-delete{background:rgba(192,57,43,.1);border-color:rgba(192,57,43,.3);color:#e74c3c;}
+.btn-delete:hover{background:rgba(192,57,43,.2);}
+.btn-mark-paid{background:rgba(109,184,122,.1);border-color:rgba(109,184,122,.3);color:var(--leaf);}
+.btn-mark-paid:hover{background:rgba(109,184,122,.2);}
+.btn-export{padding:9px 20px;background:transparent;border:1px solid rgba(109,184,122,.3);color:var(--leaf);border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-export:hover{background:rgba(109,184,122,.1);}
+
+/* ADMIN MODAL */
+.admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:800;display:none;align-items:center;justify-content:center;padding:20px;}
+.admin-modal-overlay.open{display:flex;}
+.admin-modal{background:#1a3a2a;border:1px solid rgba(109,184,122,.25);border-radius:20px;padding:36px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;}
+.admin-modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;}
+
+/* NOTIFY */
+.notify-card{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.15);border-radius:16px;padding:28px;max-width:600px;}
+.notify-card h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:6px;}
+.notify-card p{color:var(--muted);font-size:14px;margin-bottom:24px;}
+
+/* ADMIN LOGIN */
+#admin-login{display:none;min-height:100vh;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,rgba(45,90,61,.3) 0%,transparent 60%),linear-gradient(135deg,#0a1a10 0%,#0d2218 100%);padding:40px 20px;}
+#admin-login.active{display:flex;}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(13,34,24,.9);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.loading-spinner{width:44px;height:44px;border:3px solid rgba(109,184,122,.2);border-top-color:var(--leaf);border-radius:50%;animation:spin .8s linear infinite;}
+.loading-text{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(13,34,24,.3);border-top-color:var(--deep);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--deep);}
+::-webkit-scrollbar-thumb{background:var(--moss);border-radius:3px;}
+
+/* ===== PREVIOUS HIKES SECTION ===== */
+.prev-hikes-section{background:var(--deep);padding:20px 0 80px;}
+.prev-hikes-header{padding:0 60px 40px;display:flex;justify-content:space-between;align-items:flex-end;}
+.prev-hikes-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.prev-hikes-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);font-weight:900;color:var(--white);line-height:1.1;}
+.prev-hikes-title em{color:var(--gold);font-style:italic;}
+.prev-hikes-sub{font-size:14px;color:var(--muted);margin-top:8px;max-width:400px;line-height:1.6;}
+.prev-hikes-scroll-wrap{overflow-x:auto;padding:0 60px 20px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
+.prev-hikes-scroll-wrap::-webkit-scrollbar{height:4px;}
+.prev-hikes-scroll-wrap::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:4px;}
+.prev-hikes-scroll-wrap::-webkit-scrollbar-thumb{background:var(--moss);border-radius:4px;}
+.prev-hikes-row{display:flex;gap:24px;width:max-content;padding-bottom:8px;}
+
+/* HIKE STORY CARD */
+.hike-story-card{width:340px;flex-shrink:0;background:rgba(255,255,255,.03);border:1.5px solid rgba(109,184,122,.15);border-radius:20px;overflow:hidden;transition:all .35s;position:relative;}
+.hike-story-card:hover{border-color:rgba(212,168,67,.4);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4);}
+
+/* PHOTO CAROUSEL INSIDE CARD */
+.story-carousel{position:relative;height:220px;overflow:hidden;background:#0d2218;}
+.story-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1);}
+.story-slide{min-width:100%;height:100%;flex-shrink:0;position:relative;}
+.story-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+.story-slide-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;background:linear-gradient(135deg,#1a3a2a,#0d2218);}
+.story-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,34,24,.7) 0%,transparent 60%);}
+.story-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(13,34,24,.55);border:1px solid rgba(250,247,242,.2);color:var(--white);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .25s;backdrop-filter:blur(6px);border-style:none;padding:0;}
+.story-nav:hover{background:rgba(212,168,67,.4);border-color:var(--gold);}
+.story-nav-prev{left:10px;}
+.story-nav-next{right:10px;}
+.story-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:10;}
+.story-dot{width:5px;height:5px;border-radius:50%;background:rgba(250,247,242,.4);border:none;padding:0;cursor:pointer;transition:all .3s;}
+.story-dot.active{background:var(--gold);width:14px;border-radius:3px;}
+.story-photo-count{position:absolute;top:12px;right:12px;background:rgba(13,34,24,.75);border:1px solid rgba(250,247,242,.15);border-radius:50px;padding:3px 10px;font-family:'Space Mono',monospace;font-size:10px;color:rgba(250,247,242,.8);z-index:10;backdrop-filter:blur(6px);}
+.story-date-badge{position:absolute;top:12px;left:12px;background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.35);border-radius:50px;padding:3px 10px;font-family:'Space Mono',monospace;font-size:10px;color:var(--gold);z-index:10;backdrop-filter:blur(6px);}
+
+/* STORY CARD BODY */
+.story-body{padding:18px 20px 20px;}
+.story-location{font-family:'Space Mono',monospace;font-size:10px;color:var(--leaf);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;}
+.story-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.25;}
+.story-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.story-stats{display:flex;gap:16px;flex-wrap:wrap;}
+.story-stat{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(250,247,242,.6);}
+.story-stat span{font-weight:500;color:rgba(250,247,242,.85);}
+
+/* SCROLL ARROWS */
+.prev-hikes-nav{display:flex;gap:8px;}
+.ph-nav-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(109,184,122,.2);color:var(--white);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.ph-nav-btn:hover{background:rgba(212,168,67,.15);border-color:var(--gold);color:var(--gold);}
+
+@media(max-width:768px){
+  .prev-hikes-header{padding:0 20px 28px;flex-direction:column;align-items:flex-start;gap:16px;}
+  .prev-hikes-scroll-wrap{padding:0 20px 16px;}
+  .hike-story-card{width:290px;}
+}
+
+@media(max-width:768px){
+  .land-nav{padding:16px 20px;}
+  .land-features{padding:20px 24px 60px;}
+  .land-stats{gap:30px;}
+  .hero-content{padding:80px 24px 140px;}
+  .dash-nav{padding:0 16px;flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;gap:8px;}
+  .dash-nav-center{order:3;width:100%;justify-content:center;padding-bottom:4px;}
+  .app-page{padding:24px 16px 140px;}
+  .booking-bar{padding:12px 16px;}
+  .admin-nav{padding:0 16px;flex-wrap:wrap;height:auto;padding-top:8px;padding-bottom:8px;gap:6px;}
+  .admin-page{padding:20px 16px 80px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading...</div>
+</div>
+
+<!-- LANDING -->
+<div id="landing" class="page">
+  <div class="hero-carousel-wrap" id="carousel-wrap">
+    <nav class="land-nav">
+      <div class="logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img"></div>
+      <div class="land-nav-btns">
+        <button class="btn-outline" onclick="showPage('login')">Sign In</button>
+        <button class="btn-solid" onclick="showPage('signup')">Join Us</button>
+      </div>
+    </nav>
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-slide"><img src="hike5.jpg" alt="Kafue Hills"><div class="carousel-overlay"></div></div>
+      <div class="carousel-slide"><img src="hike2.jpg" alt="Happy hikers"><div class="carousel-overlay"></div></div>
+      <div class="carousel-slide"><img src="hike1.jpg" alt="Mountain of God"><div class="carousel-overlay"></div></div>
+      <div class="carousel-slide"><img src="hike4.jpg" alt="Group resting"><div class="carousel-overlay"></div></div>
+      <div class="carousel-slide"><img src="hike3.jpg" alt="Boots circle"><div class="carousel-overlay"></div></div>
+      <div class="carousel-slide"><img src="hike6.jpg" alt="Hike and cruise"><div class="carousel-overlay"></div></div>
+      <div class="carousel-slide"><img src="cover.jpeg" alt="Squad at the summit"><div class="carousel-overlay"></div></div>
+    </div>
+    <div class="hero-content">
+      <div class="land-badge">🌿 Zambia's Premier Eco-Adventure</div>
+      <h1 class="hero-main-title">Let's Go Hiking<br><em>Zambia</em></h1>
+      <p class="land-desc">Guided hikes, wellness retreats &amp; corporate adventures across Zambia's most breathtaking landscapes.</p>
+      <div class="land-cta">
+        <button class="btn-hero btn-hero-primary" onclick="showPage('signup')">Book Your Adventure</button>
+        <button class="btn-hero btn-hero-secondary" onclick="showPage('login')">I Have an Account</button>
+      </div>
+    </div>
+    <button class="carousel-btn carousel-btn-prev" onclick="carouselMove(-1)">‹</button>
+    <button class="carousel-btn carousel-btn-next" onclick="carouselMove(1)">›</button>
+    <div class="hero-bottom">
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <a class="carousel-insta-link" href="https://www.instagram.com/letsgohiking_zm/" target="_blank">📷 @letsgohiking_zm</a>
+    </div>
+  </div>
+  <div class="land-stats">
+    <div class="stat-item"><div class="stat-num">120+</div><div class="stat-label">Trails Covered</div></div>
+    <div class="stat-item"><div class="stat-num">3,400</div><div class="stat-label">Happy Hikers</div></div>
+    <div class="stat-item"><div class="stat-num">8yr</div><div class="stat-label">In Business</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Eco-Certified</div></div>
+  </div>
+  <div class="land-features">
+    <div class="feat-card"><div class="feat-icon">🥾</div><div class="feat-title">Guided Hikes</div><div class="feat-desc">Expert local guides lead you through Zambia's most breathtaking trails safely and sustainably.</div></div>
+    <div class="feat-card"><div class="feat-icon">🏕️</div><div class="feat-title">Camping Adventures</div><div class="feat-desc">Multi-day wilderness camping experiences that connect you deeply with Zambia's natural heritage.</div></div>
+    <div class="feat-card"><div class="feat-icon">🧘</div><div class="feat-title">Wellness Retreats</div><div class="feat-desc">Mindfulness and fitness programs in the heart of nature for physical and mental rejuvenation.</div></div>
+    <div class="feat-card"><div class="feat-icon">🤝</div><div class="feat-title">Team Building</div><div class="feat-desc">Corporate hiking experiences designed to strengthen teams and boost workplace culture.</div></div>
+  </div>
+
+  <!-- PREVIOUS HIKES SECTION -->
+  <div class="prev-hikes-section">
+    <div class="prev-hikes-header">
+      <div>
+        <div class="prev-hikes-label">📸 Our Trail History</div>
+        <div class="prev-hikes-title">Memories from the <em>Wild</em></div>
+        <div class="prev-hikes-sub">Every hike leaves a mark. Browse the trails we've conquered together — each one a story worth reliving.</div>
+      </div>
+      <div class="prev-hikes-nav">
+        <button class="ph-nav-btn" onclick="scrollPrevHikes(-1)" title="Scroll left">‹</button>
+        <button class="ph-nav-btn" onclick="scrollPrevHikes(1)" title="Scroll right">›</button>
+      </div>
+    </div>
+    <div class="prev-hikes-scroll-wrap" id="prev-hikes-scroll">
+      <div class="prev-hikes-row" id="prev-hikes-row"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div id="signup" class="page">
+  <div class="auth-card">
+    <span class="back-link" onclick="showPage('landing')">← Back to home</span>
+    <div class="auth-logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img-auth"></div>
+    <p class="auth-sub">Join thousands of adventurers exploring Zambia</p>
+    <div class="error-msg" id="signup-error"></div>
+    <div class="form-group"><label class="form-label">Full Name</label><input type="text" id="signup-name" class="form-input" placeholder="Your full name"></div>
+    <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="signup-email" class="form-input" placeholder="you@example.com"></div>
+    <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" id="signup-phone" class="form-input" placeholder="+260 770 000 000"></div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="pass-field-wrap">
+        <input type="password" id="signup-pass" class="form-input" placeholder="At least 6 characters">
+        <button type="button" class="pass-toggle" onclick="togglePassword('signup-pass', this)" title="Show/hide password">👁</button>
+      </div>
+    </div>
+    <div class="tc-row"><input type="checkbox" id="signup-tc" class="tc-checkbox"><label for="signup-tc" class="tc-label">By signing up you agree to the <span class="tc-link">terms and conditions</span> of Let's Go Hiking Zambia.</label></div>
+    <button class="btn-full" id="signup-btn" onclick="handleSignup()">Create My Account</button>
+    <p class="auth-switch">Already have an account? <a onclick="showPage('login')">Sign in here</a></p>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="page">
+  <div class="auth-card">
+    <span class="back-link" onclick="showPage('landing')">← Back to home</span>
+    <div class="auth-logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img-auth"></div>
+    <h2 class="auth-title">Welcome Back</h2>
+    <p class="auth-sub">Sign in to book your next adventure</p>
+    <div class="error-msg" id="login-error"></div>
+    <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="login-email" class="form-input" placeholder="you@example.com"></div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="pass-field-wrap">
+        <input type="password" id="login-pass" class="form-input" placeholder="Your password">
+        <button type="button" class="pass-toggle" onclick="togglePassword('login-pass', this)" title="Show/hide password">👁</button>
+      </div>
+    </div>
+    <span class="forgot-link" onclick="showPage('forgot')">Forgot your password?</span>
+    <button class="btn-full" id="login-btn" onclick="handleLogin()">Sign In</button>
+    <p class="auth-switch">New here? <a onclick="showPage('signup')">Sign up free</a></p>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD -->
+<div id="forgot" class="page">
+  <div class="auth-card">
+    <span class="back-link" onclick="showPage('login')">← Back to login</span>
+    <div class="auth-logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img-auth"></div>
+    <h2 class="auth-title">Reset Password</h2>
+    <p class="auth-sub">Enter your email and we'll send you a reset link</p>
+    <div class="error-msg" id="forgot-error"></div>
+    <div class="success-msg" id="forgot-success"></div>
+    <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="forgot-email" class="form-input" placeholder="you@example.com"></div>
+    <button class="btn-full" id="forgot-btn" onclick="handleForgotPassword()">Send Reset Link</button>
+    <p class="auth-switch">Remembered it? <a onclick="showPage('login')">Back to login</a></p>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="app" class="page">
+  <nav class="dash-nav">
+    <div class="logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img"></div>
+    <div class="dash-nav-center">
+      <button class="nav-tab active" id="tab-adventures" onclick="switchAppPage('adventures')"><span class="tab-dot"></span>🥾 Adventures</button>
+      <button class="nav-tab" id="tab-bookings" onclick="switchAppPage('bookings')"><span class="tab-dot"></span>📋 My Bookings</button>
+      <button class="nav-tab" id="tab-memories" onclick="switchAppPage('memories')"><span class="tab-dot"></span>📸 Past Hikes</button>
+      <button class="nav-tab" id="tab-profile" onclick="switchAppPage('profile')"><span class="tab-dot"></span>👤 Profile</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="dash-user"><div class="dash-avatar" id="user-avatar">A</div><span class="dash-username">Hi, <span id="user-display-name">Explorer</span></span></div>
+      <button class="btn-logout" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="app-page active" id="page-adventures">
+    <div class="adv-page-label">🌿 Upcoming Expeditions</div>
+    <h2 class="adv-page-title">Choose Your Next <span class="gold">Adventure</span></h2>
+    <p class="adv-page-sub">Select one or more trails, then proceed to secure payment. All deposits support trail conservation.</p>
+    <div class="adventures-grid" id="adventures-grid"><div class="empty-state"><div class="loading-spinner" style="margin:0 auto 16px;"></div><p>Loading adventures...</p></div></div>
+  </div>
+  <div class="app-page" id="page-bookings">
+    <div class="adv-page-label">📋 Booking History</div>
+    <h2 class="adv-page-title">My <span class="gold">Bookings</span></h2>
+    <p class="adv-page-sub">All your confirmed adventures in one place.</p>
+    <div id="bookings-list"></div>
+  </div>
+  <div class="app-page" id="page-memories">
+    <div class="adv-page-label">📸 Trail History</div>
+    <h2 class="adv-page-title">Past <span class="gold">Hikes</span></h2>
+    <p class="adv-page-sub">Relive the trails we've conquered together. Swipe through the photos from each adventure.</p>
+    <div class="prev-hikes-scroll-wrap" style="padding:0 0 20px;overflow-x:visible;">
+      <div id="app-memories-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;"></div>
+    </div>
+  </div>
+  <div class="app-page" id="page-profile">
+    <div class="adv-page-label">👤 Your Account</div>
+    <h2 class="adv-page-title">My <span class="gold">Profile</span></h2>
+    <div class="profile-card">
+      <div class="profile-avatar-big" id="profile-avatar-big">A</div>
+      <div class="profile-name" id="profile-name">–</div>
+      <div class="profile-email-text" id="profile-email-display">–</div>
+      <div class="profile-field"><span class="profile-field-label">Phone</span><span class="profile-field-val" id="profile-phone">–</span></div>
+      <div class="profile-field"><span class="profile-field-label">Member Since</span><span class="profile-field-val" id="profile-since">–</span></div>
+      <div class="profile-field"><span class="profile-field-label">Total Bookings</span><span class="profile-field-val" id="profile-total-bookings">0</span></div>
+    </div>
+    <button class="btn-logout" style="font-size:14px;padding:10px 24px;" onclick="handleLogout()">Sign Out of Account</button>
+  </div>
+</div>
+
+<!-- BOOKING BAR -->
+<div class="booking-bar" id="booking-bar">
+  <div class="booking-bar-left">
+    <div class="booking-count" id="booking-count">0</div>
+    <div class="booking-info"><div>Adventures selected</div><div class="booking-sublabel" id="booking-adventure-names">None yet</div></div>
+  </div>
+  <div><div class="booking-total" id="booking-total">ZMW 0</div><div class="booking-sublabel">Total</div></div>
+  <button class="btn-book-now" onclick="openPaymentModal()">Proceed to Payment →</button>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Secure Payment</h3><button class="modal-close" onclick="closePaymentModal()">✕</button></div>
+    <div class="order-summary">
+      <div class="order-summary-title">📋 Order Summary</div>
+      <div id="order-items"></div>
+      <div class="order-total"><span>Total Due</span><span class="order-total-amount" id="modal-total">ZMW 0</span></div>
+    </div>
+    <div class="payment-section-title">Payment Method</div>
+    <div class="payment-methods">
+      <div class="payment-method active" onclick="selectPaymentMethod(this,'card')"><div class="pm-icon">💳</div>Card</div>
+      <div class="payment-method" onclick="selectPaymentMethod(this,'mobile')"><div class="pm-icon">📱</div>Mobile Money</div>
+      <div class="payment-method" onclick="selectPaymentMethod(this,'bank')"><div class="pm-icon">🏦</div>Bank Transfer</div>
+    </div>
+    <div id="payment-fields-card">
+      <div class="payment-section-title">Card Details</div>
+      <div class="form-group card-number-field"><label class="form-label">Card Number</label><input type="text" class="form-input" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)"><div class="card-icons">💳</div></div>
+      <div class="form-group"><label class="form-label">Cardholder Name</label><input type="text" class="form-input" id="card-name" placeholder="Name as on card"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Expiry</label><input type="text" class="form-input" id="card-expiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)"></div>
+        <div class="form-group"><label class="form-label">CVV</label><input type="text" class="form-input" id="card-cvv" placeholder="123" maxlength="3"></div>
+      </div>
+    </div>
+    <div id="payment-fields-mobile" style="display:none">
+      <div class="payment-section-title">Mobile Money</div>
+      <div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" class="form-input" id="mobile-number" placeholder="+260 970 000 000"></div>
+      <div class="form-group"><label class="form-label">Provider</label><select class="form-input" id="mobile-provider"><option value="">Select provider</option><option>MTN Mobile Money</option><option>Airtel Money</option><option>Zamtel Kwacha</option></select></div>
+    </div>
+    <div id="payment-fields-bank" style="display:none">
+      <div class="payment-section-title">Bank Transfer Details</div>
+      <div class="order-summary">
+        <div class="order-item"><span>Bank Name</span><strong>Stanbic Bank Zambia</strong></div>
+        <div class="order-item"><span>Account Name</span><strong>EcoTrek Adventures</strong></div>
+        <div class="order-item"><span>Account Number</span><strong>0140255819800</strong></div>
+        <div class="order-item"><span>Branch Code</span><strong>02</strong></div>
+      </div>
+      <div class="form-group"><label class="form-label">Your Reference / Transaction ID</label><input type="text" class="form-input" id="bank-ref" placeholder="Enter transaction reference"></div>
+    </div>
+    <button class="btn-full" id="pay-btn" onclick="processPayment()">Pay Now</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="success-overlay">
+  <div id="confetti-wrapper" style="position:fixed;top:0;left:0;right:0;pointer-events:none;z-index:700;"></div>
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    <h2 class="success-title">Booking Confirmed!</h2>
+    <p class="success-sub">Your adventure is booked! A confirmation email has been sent to <strong id="confirm-email-display" style="color:var(--leaf)"></strong></p>
+    <div class="success-email-preview">
+      <div class="email-label">📧 Confirmation Details</div>
+      <div class="email-row"><span>To</span><strong id="confirm-to"></strong></div>
+      <div class="email-row"><span>Booking Ref</span><strong id="confirm-ref" style="color:var(--gold);font-family:'Space Mono',monospace"></strong></div>
+      <div class="email-row"><span>Adventures</span><strong id="confirm-adventures"></strong></div>
+      <div class="email-row"><span>Amount Paid</span><strong id="confirm-amount" style="color:var(--gold)"></strong></div>
+      <div class="email-row"><span>Contact</span><strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4b1b7bba0a6b1bfaeb994b3b9b5bdb8fab7bbb9">[email&#160;protected]</a></strong></div>
+    </div>
+    <button class="btn-full" onclick="closeSuccess()">Back to Adventures</button>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="admin-login" class="page">
+  <div class="auth-card">
+    <div class="auth-logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img-auth"></div>
+    <h2 class="auth-title">Admin Panel</h2>
+    <p class="auth-sub">Staff access only</p>
+    <div class="error-msg" id="admin-login-error"></div>
+    <div class="form-group"><label class="form-label">Admin Email</label><input type="email" id="admin-email" class="form-input" placeholder="admin@letsgohiking.zm"></div>
+    <div class="form-group"><label class="form-label">Password</label><input type="password" id="admin-pass" class="form-input" placeholder="Admin password"></div>
+    <button class="btn-full" onclick="handleAdminLogin()">Access Admin Panel</button>
+    <p class="auth-switch"><a onclick="showPage('landing')">← Back to site</a></p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin" class="page">
+  <nav class="admin-nav">
+    <div class="admin-nav-title">⚙️ Admin — Let's Go Hiking Zambia</div>
+    <div class="admin-nav-tabs">
+      <button class="admin-tab active" id="atab-dashboard" onclick="switchAdminPage('dashboard')">📊 Dashboard</button>
+      <button class="admin-tab" id="atab-hikes" onclick="switchAdminPage('hikes')">🥾 Hikes</button>
+      <button class="admin-tab" id="atab-bookings" onclick="switchAdminPage('bookings')">💳 Bookings</button>
+      <button class="admin-tab" id="atab-customers" onclick="switchAdminPage('customers')">👥 Customers</button>
+      <button class="admin-tab" id="atab-notify" onclick="switchAdminPage('notify')">📣 Notify</button>
+    </div>
+    <button class="btn-logout" onclick="handleAdminLogout()">Sign Out</button>
+  </nav>
+
+  <!-- Dashboard -->
+  <div class="admin-page active" id="apage-dashboard">
+    <div class="admin-page-header"><h2 class="admin-page-title">Dashboard <span>Overview</span></h2></div>
+    <div class="admin-stats-row">
+      <div class="admin-stat-card"><div class="admin-stat-num" id="stat-total-hikes">–</div><div class="admin-stat-label">Active Hikes</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-num" id="stat-total-bookings">–</div><div class="admin-stat-label">Total Bookings</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-num" id="stat-total-customers">–</div><div class="admin-stat-label">Registered Hikers</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-num" id="stat-total-revenue">–</div><div class="admin-stat-label">Total Revenue</div></div>
+    </div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:16px;color:var(--white);">Recent Bookings</h3>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Ref</th><th>Hiker</th><th>Adventure</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody id="dash-recent-bookings"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);">Loading...</td></tr></tbody></table></div>
+  </div>
+
+  <!-- Hikes -->
+  <div class="admin-page" id="apage-hikes">
+    <div class="admin-page-header">
+      <h2 class="admin-page-title">Manage <span>Hikes</span></h2>
+      <button class="btn-admin-add" onclick="openHikeModal()">+ Add New Hike</button>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Title</th><th>Date</th><th>Location</th><th>Price</th><th>Transport</th><th>Spots</th><th>Difficulty</th><th>Actions</th></tr></thead><tbody id="admin-hikes-table"><tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted);">Loading...</td></tr></tbody></table></div>
+  </div>
+
+  <!-- Bookings -->
+  <div class="admin-page" id="apage-bookings">
+    <div class="admin-page-header">
+      <h2 class="admin-page-title">Manage <span>Bookings</span></h2>
+      <button class="btn-export" onclick="exportBookings()">⬇ Export CSV</button>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Ref</th><th>Hiker</th><th>Adventure</th><th>Amount</th><th>Transport</th><th>Payment</th><th>Date</th><th>Action</th></tr></thead><tbody id="admin-bookings-table"><tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted);">Loading...</td></tr></tbody></table></div>
+  </div>
+
+  <!-- Customers -->
+  <div class="admin-page" id="apage-customers">
+    <div class="admin-page-header">
+      <h2 class="admin-page-title">Customer <span>List</span></h2>
+      <button class="btn-export" onclick="exportCustomers()">⬇ Export CSV</button>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th><th>Bookings</th></tr></thead><tbody id="admin-customers-table"><tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted);">Loading...</td></tr></tbody></table></div>
+  </div>
+
+  <!-- Notify -->
+  <div class="admin-page" id="apage-notify">
+    <div class="admin-page-header"><h2 class="admin-page-title">Notify <span>Hikers</span></h2></div>
+    <div class="notify-card">
+      <h3>Send a Message</h3>
+      <p>Send an email notification to all hikers booked on a specific adventure.</p>
+      <div class="form-group"><label class="form-label">Select Hike</label><select class="form-input" id="notify-hike-select"><option value="">– Select a hike –</option></select></div>
+      <div class="form-group"><label class="form-label">Subject</label><input type="text" class="form-input" id="notify-subject" placeholder="e.g. Important update about your upcoming hike"></div>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" id="notify-message" rows="5" placeholder="Your message to all booked hikers..." style="resize:vertical;"></textarea></div>
+      <div class="error-msg" id="notify-error"></div>
+      <div class="success-msg" id="notify-success"></div>
+      <button class="btn-full" style="margin-top:0;" onclick="sendNotification()">📣 Send Notification</button>
+    </div>
+  </div>
+</div>
+
+<!-- HIKE MODAL -->
+<div class="admin-modal-overlay" id="hike-modal">
+  <div class="admin-modal">
+    <div class="admin-modal-title"><span id="hike-modal-title">Add New Hike</span><button class="modal-close" onclick="closeHikeModal()">✕</button></div>
+    <input type="hidden" id="hike-edit-id">
+    <div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="hike-title" placeholder="e.g. Lusaka Hills Sunrise Hike"></div>
+    <div class="form-group"><label class="form-label">Location *</label><input type="text" class="form-input" id="hike-location" placeholder="e.g. Lusaka Hills, Zambia"></div>
+    <div class="form-group"><label class="form-label">Date *</label><input type="text" class="form-input" id="hike-date" placeholder="e.g. Saturday, 22 March 2025"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Duration</label><input type="text" class="form-input" id="hike-duration" placeholder="e.g. 6 hours"></div>
+      <div class="form-group"><label class="form-label">Distance</label><input type="text" class="form-input" id="hike-distance" placeholder="e.g. 12 km"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Price (ZMW) *</label><input type="number" class="form-input" id="hike-price" placeholder="350"></div>
+      <div class="form-group"><label class="form-label">Transport Fee (ZMW)</label><input type="number" class="form-input" id="hike-transport" placeholder="80"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Available Spots</label><input type="number" class="form-input" id="hike-spots" placeholder="20"></div>
+      <div class="form-group"><label class="form-label">Difficulty</label><select class="form-input" id="hike-difficulty"><option value="easy">Easy</option><option value="moderate">Moderate</option><option value="hard">Hard</option></select></div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="hike-desc" rows="3" placeholder="Describe the hike..." style="resize:vertical;"></textarea></div>
+    <div class="error-msg" id="hike-modal-error"></div>
+    <button class="btn-full" style="margin-top:8px;" onclick="saveHike()">Save Hike</button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+(function() {
+'use strict';
+
+// ===== CONFIG =====
+var SUPABASE_URL = 'https://ptxumldhzegghixnpemc.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0eHVtbGRoemVnZ2hpeG5wZW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDc3NDQsImV4cCI6MjA4OTUyMzc0NH0.qh3f9S9C714gsUIDZLuQUrwAcYH4J_aFCR3zOKebVDM';
+var ADMIN_PASSWORD = 'EcoTrekAdmin2025!';
+var EMAILJS_PUBLIC = '6dSo-GIMrzK3QUKff';
+var EMAILJS_SERVICE = 'service_lrjn94h';
+var EMAILJS_TEMPLATE = 'template_qbp63ir';
+
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+emailjs.init(EMAILJS_PUBLIC);
+
+// ===== STATE =====
+var currentUser = null;
+var selectedAdventures = [];
+var activePaymentMethod = 'card';
+var hikeCache = [];
+var carouselIndex = 0;
+var carouselTotal = 7;
+var carouselTimer = null;
+
+// ===== EXPOSE GLOBALS =====
+window.showPage = showPage;
+window.switchAppPage = switchAppPage;
+window.switchAdminPage = switchAdminPage;
+window.handleSignup = handleSignup;
+window.handleLogin = handleLogin;
+window.handleLogout = handleLogout;
+window.handleAdminLogin = handleAdminLogin;
+window.handleAdminLogout = handleAdminLogout;
+window.handleForgotPassword = handleForgotPassword;
+window.togglePassword = togglePassword;
+window.toggleAdventure = toggleAdventure;
+window.openPaymentModal = openPaymentModal;
+window.closePaymentModal = closePaymentModal;
+window.selectPaymentMethod = selectPaymentMethod;
+window.formatCardNumber = formatCardNumber;
+window.formatExpiry = formatExpiry;
+window.processPayment = processPayment;
+window.closeSuccess = closeSuccess;
+window.carouselMove = carouselMove;
+window.storyMove = storyMove;
+window.storyGoTo = storyGoTo;
+window.scrollPrevHikes = scrollPrevHikes;
+window.openHikeModal = openHikeModal;
+window.closeHikeModal = closeHikeModal;
+window.saveHike = saveHike;
+window.deleteHike = deleteHike;
+window.editHike = editHike;
+window.markAsPaid = markAsPaid;
+window.exportBookings = exportBookings;
+window.exportCustomers = exportCustomers;
+window.sendNotification = sendNotification;
+
+// ===== INIT =====
+async function init() {
+  showLoading(true);
+  var session = await sb.auth.getSession();
+  if (session.data.session) {
+    currentUser = session.data.session.user;
+    await loadUserProfile();
+    showPage('app');
+  } else {
+    showPage('landing');
+  }
+  carouselInit();
+  renderPreviousHikes('prev-hikes-row');
+  showLoading(false);
+}
+
+function showLoading(show) {
+  document.getElementById('loading-overlay').style.display = show ? 'flex' : 'none';
+}
+
+// ===== PAGE NAV =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+    p.style.display = '';
+  });
+  var pg = document.getElementById(id);
+  if (!pg) return;
+  pg.classList.add('active');
+  if (id === 'signup' || id === 'login' || id === 'admin-login' || id === 'forgot') {
+    pg.style.display = 'flex';
+  }
+  if (id === 'app') {
+    pg.style.display = 'flex';
+    renderUserInfo();
+    switchAppPage('adventures');
+  }
+  if (id === 'admin') {
+    pg.style.display = 'flex';
+    switchAdminPage('dashboard');
+  }
+  window.scrollTo(0, 0);
+}
+
+function switchAppPage(name) {
+  document.querySelectorAll('.app-page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+  var pg = document.getElementById('page-' + name);
+  var tab = document.getElementById('tab-' + name);
+  if (pg) pg.classList.add('active');
+  if (tab) tab.classList.add('active');
+  if (name === 'adventures') loadHikes();
+  if (name === 'bookings') loadMyBookings();
+  if (name === 'memories') renderPreviousHikes('app-memories-grid');
+  if (name === 'profile') renderProfile();
+  window.scrollTo(0, 0);
+}
+
+function switchAdminPage(name) {
+  document.querySelectorAll('.admin-page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.admin-tab').forEach(function(t) { t.classList.remove('active'); });
+  var pg = document.getElementById('apage-' + name);
+  var tab = document.getElementById('atab-' + name);
+  if (pg) pg.classList.add('active');
+  if (tab) tab.classList.add('active');
+  if (name === 'dashboard') loadAdminDashboard();
+  if (name === 'hikes') loadAdminHikes();
+  if (name === 'bookings') loadAdminBookings();
+  if (name === 'customers') loadAdminCustomers();
+  if (name === 'notify') loadNotifyHikes();
+  window.scrollTo(0, 0);
+}
+
+// ===== AUTH =====
+async function handleSignup() {
+  var name = document.getElementById('signup-name').value.trim();
+  var email = document.getElementById('signup-email').value.trim();
+  var phone = document.getElementById('signup-phone').value.trim();
+  var pass = document.getElementById('signup-pass').value;
+  var tc = document.getElementById('signup-tc').checked;
+  var err = document.getElementById('signup-error');
+  var btn = document.getElementById('signup-btn');
+
+  if (!name || !email || !pass) { showErr(err, 'Please fill in all required fields.'); return; }
+  if (email.indexOf('@') < 0) { showErr(err, 'Please enter a valid email address.'); return; }
+  if (pass.length < 6) { showErr(err, 'Password must be at least 6 characters.'); return; }
+  if (!tc) { showErr(err, 'Please agree to the terms and conditions to continue.'); return; }
+
+  btn.innerHTML = '<span class="spinner"></span> Creating account...';
+  btn.disabled = true;
+
+  var res = await sb.auth.signUp({
+    email: email,
+    password: pass,
+    options: { data: { full_name: name, phone: phone } }
+  });
+
+  btn.innerHTML = 'Create My Account';
+  btn.disabled = false;
+
+  if (res.error) { showErr(err, res.error.message); return; }
+
+  // Save profile
+  await sb.from('profiles').upsert({ id: res.data.user.id, full_name: name, phone: phone, email: email });
+
+  currentUser = res.data.user;
+  err.style.display = 'none';
+  showPage('app');
+}
+
+async function handleLogin() {
+  var email = document.getElementById('login-email').value.trim();
+  var pass = document.getElementById('login-pass').value;
+  var err = document.getElementById('login-error');
+  var btn = document.getElementById('login-btn');
+
+  btn.innerHTML = '<span class="spinner"></span> Signing in...';
+  btn.disabled = true;
+
+  var res = await sb.auth.signInWithPassword({ email: email, password: pass });
+
+  btn.innerHTML = 'Sign In';
+  btn.disabled = false;
+
+  if (res.error) { showErr(err, 'Incorrect email or password.'); return; }
+  currentUser = res.data.user;
+  err.style.display = 'none';
+  await loadUserProfile();
+  showPage('app');
+}
+
+async function handleLogout() {
+  await sb.auth.signOut();
+  currentUser = null;
+  selectedAdventures = [];
+  document.getElementById('booking-bar').classList.remove('visible');
+  showPage('landing');
+}
+
+function togglePassword(inputId, btn) {
+  var input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+    btn.title = 'Hide password';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
+    btn.title = 'Show password';
+  }
+}
+
+async function handleForgotPassword() {
+  var email = document.getElementById('forgot-email').value.trim();
+  var err = document.getElementById('forgot-error');
+  var suc = document.getElementById('forgot-success');
+  var btn = document.getElementById('forgot-btn');
+
+  if (!email || email.indexOf('@') < 0) { showErr(err, 'Please enter a valid email address.'); return; }
+
+  btn.innerHTML = '<span class="spinner"></span> Sending...';
+  btn.disabled = true;
+  err.style.display = 'none';
+  suc.style.display = 'none';
+
+  var res = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.href
+  });
+
+  btn.innerHTML = 'Send Reset Link';
+  btn.disabled = false;
+
+  if (res.error) { showErr(err, res.error.message); return; }
+
+  suc.textContent = '✓ Reset link sent! Check your email inbox (and spam folder).';
+  suc.style.display = 'block';
+  document.getElementById('forgot-email').value = '';
+}
+
+function handleAdminLogin() {
+  var email = document.getElementById('admin-email').value.trim();
+  var pass = document.getElementById('admin-pass').value;
+  var err = document.getElementById('admin-login-error');
+  if (email === 'admin@letsgohiking.zm' && pass === ADMIN_PASSWORD) {
+    err.style.display = 'none';
+    showPage('admin');
+  } else {
+    showErr(err, 'Incorrect admin credentials.');
+  }
+}
+
+function handleAdminLogout() {
+  showPage('landing');
+}
+
+function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+
+// ===== USER PROFILE =====
+async function loadUserProfile() {
+  if (!currentUser) return;
+  var res = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if (res.data) currentUser.profile = res.data;
+}
+
+function renderUserInfo() {
+  if (!currentUser) return;
+  var name = (currentUser.profile && currentUser.profile.full_name) ? currentUser.profile.full_name : (currentUser.user_metadata && currentUser.user_metadata.full_name) ? currentUser.user_metadata.full_name : currentUser.email;
+  var first = name.split(' ')[0];
+  document.getElementById('user-display-name').textContent = first;
+  document.getElementById('user-avatar').textContent = first[0].toUpperCase();
+}
+
+function renderProfile() {
+  if (!currentUser) return;
+  var name = (currentUser.profile && currentUser.profile.full_name) || (currentUser.user_metadata && currentUser.user_metadata.full_name) || currentUser.email;
+  var phone = (currentUser.profile && currentUser.profile.phone) || (currentUser.user_metadata && currentUser.user_metadata.phone) || 'Not provided';
+  var joined = new Date(currentUser.created_at).toLocaleDateString('en-GB', {year:'numeric', month:'long'});
+  document.getElementById('profile-avatar-big').textContent = name[0].toUpperCase();
+  document.getElementById('profile-name').textContent = name;
+  document.getElementById('profile-email-display').textContent = currentUser.email;
+  document.getElementById('profile-phone').textContent = phone;
+  document.getElementById('profile-since').textContent = joined;
+  sb.from('bookings').select('id', {count:'exact'}).eq('user_id', currentUser.id).then(function(r) {
+    document.getElementById('profile-total-bookings').textContent = (r.count || 0) + ' adventure' + (r.count !== 1 ? 's' : '');
+  });
+}
+
+// ===== HIKES =====
+async function loadHikes() {
+  var grid = document.getElementById('adventures-grid');
+  var res = await sb.from('hikes').select('*').order('date', {ascending: true});
+  if (res.error || !res.data || res.data.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🥾</div><h3>No hikes scheduled yet</h3><p>Check back soon for upcoming adventures!</p></div>';
+    return;
+  }
+  hikeCache = res.data;
+  grid.innerHTML = '';
+  res.data.forEach(function(hike) { renderHikeCard(hike, grid); });
+}
+
+function renderHikeCard(hike, grid) {
+  var sel = selectedAdventures.find(function(a) { return a.id === hike.id; });
+  var hasTransport = sel ? sel.transport : false;
+  var displayPrice = hike.price + (hasTransport ? (hike.transport_fee || 0) : 0);
+  var diffColors = {easy:'#6db87a', moderate:'#e8c06a', hard:'#e07b50'};
+  var bgColor = diffColors[hike.difficulty] || '#6db87a';
+
+  var card = document.createElement('div');
+  card.className = 'adventure-card' + (sel ? ' selected' : '');
+  card.id = 'card-' + hike.id;
+
+  card.innerHTML =
+    '<div class="card-image" style="background:linear-gradient(160deg,#0d2218,#1a3a2a)">' +
+      '<div class="card-image-placeholder" style="background:linear-gradient(135deg,#0d2218,#1a3a2a)">🥾</div>' +
+      '<div class="card-badge" id="badge-' + hike.id + '">ZMW ' + displayPrice.toLocaleString() + '</div>' +
+      '<div class="selected-check">✓</div>' +
+    '</div>' +
+    '<div class="card-body">' +
+      '<div class="card-difficulty" style="color:' + bgColor + '">⬥ ' + (hike.difficulty || 'easy').charAt(0).toUpperCase() + (hike.difficulty || 'easy').slice(1) + '</div>' +
+      '<h3 class="card-title">' + hike.title + '</h3>' +
+      '<p class="card-desc">' + (hike.description || '') + '</p>' +
+      '<div class="card-meta">' +
+        '<div class="meta-row"><span>📅</span> ' + hike.date + '</div>' +
+        '<div class="meta-row"><span>📍</span> ' + hike.location + '</div>' +
+        (hike.duration ? '<div class="meta-row"><span>⏱</span> ' + hike.duration + (hike.distance ? ' · ' + hike.distance : '') + '</div>' : '') +
+        '<div class="meta-row"><span>👥</span> ' + (hike.spots || 0) + ' spots remaining</div>' +
+      '</div>' +
+    '</div>' +
+    (hike.transport_fee ? '<div class="transport-row" id="transport-row-' + hike.id + '"><div class="transport-left"><span class="transport-icon">🚐</span><div><div class="transport-label">Need transport?</div><div class="transport-fee">+ ZMW ' + hike.transport_fee + ' per person</div></div></div><label class="transport-toggle"><input type="checkbox" id="transport-' + hike.id + '"' + (hasTransport ? ' checked' : '') + '><span class="toggle-track"></span></label></div>' : '') +
+    '<div class="card-footer">' +
+      '<div><div class="card-price" id="price-' + hike.id + '">ZMW ' + displayPrice.toLocaleString() + ' <span>/ person</span></div><div class="card-price-note" id="price-note-' + hike.id + '">' + (hasTransport ? '🚐 Includes transport' : (hike.transport_fee ? 'Transport optional' : '')) + '</div></div>' +
+      '<button class="btn-select" id="btn-select-' + hike.id + '">' + (sel ? '✓ Selected' : 'Select') + '</button>' +
+    '</div>';
+
+  grid.appendChild(card);
+
+  (function(hId) {
+    document.getElementById('btn-select-' + hId).addEventListener('click', function(e) { e.stopPropagation(); toggleAdventure(hId); });
+    if (hike.transport_fee) {
+      document.getElementById('transport-' + hId).addEventListener('change', function(e) { e.stopPropagation(); updateTransport(hId, this.checked); });
+      document.getElementById('transport-row-' + hId).addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+  })(hike.id);
+}
+
+function updateTransport(id, wants) {
+  var hike = hikeCache.find(function(h) { return h.id === id; });
+  if (!hike) return;
+  var total = hike.price + (wants ? (hike.transport_fee || 0) : 0);
+  document.getElementById('price-' + id).innerHTML = 'ZMW ' + total.toLocaleString() + ' <span>/ person</span>';
+  document.getElementById('price-note-' + id).textContent = wants ? '🚐 Includes transport' : 'Transport optional';
+  document.getElementById('badge-' + id).textContent = 'ZMW ' + total.toLocaleString();
+  var sel = selectedAdventures.find(function(a) { return a.id === id; });
+  if (sel) { sel.transport = wants; sel.price = total; updateBookingBar(); }
+}
+
+function toggleAdventure(id) {
+  var idx = selectedAdventures.findIndex(function(a) { return a.id === id; });
+  var card = document.getElementById('card-' + id);
+  var btn = document.getElementById('btn-select-' + id);
+  if (idx > -1) {
+    selectedAdventures.splice(idx, 1);
+    card.classList.remove('selected');
+    btn.textContent = 'Select';
+  } else {
+    var hike = hikeCache.find(function(h) { return h.id === id; });
+    if (!hike) return;
+    var transportEl = document.getElementById('transport-' + id);
+    var wants = transportEl ? transportEl.checked : false;
+    var finalPrice = hike.price + (wants ? (hike.transport_fee || 0) : 0);
+    selectedAdventures.push({ id: hike.id, title: hike.title, price: finalPrice, basePrice: hike.price, transport: wants, transportFee: hike.transport_fee || 0 });
+    card.classList.add('selected');
+    btn.textContent = '✓ Selected';
+  }
+  updateBookingBar();
+}
+
+function updateBookingBar() {
+  var bar = document.getElementById('booking-bar');
+  var count = selectedAdventures.length;
+  var total = selectedAdventures.reduce(function(s,a) { return s + a.price; }, 0);
+  document.getElementById('booking-count').textContent = count;
+  document.getElementById('booking-total').textContent = 'ZMW ' + total.toLocaleString();
+  document.getElementById('booking-adventure-names').textContent = count > 0 ? selectedAdventures.map(function(a) { return a.title.split(' ').slice(0,2).join(' ') + (a.transport ? ' 🚐' : ''); }).join(', ') : 'None yet';
+  if (count > 0) bar.classList.add('visible');
+  else bar.classList.remove('visible');
+}
+
+// ===== MY BOOKINGS =====
+async function loadMyBookings() {
+  if (!currentUser) return;
+  var el = document.getElementById('bookings-list');
+  var res = await sb.from('bookings').select('*').eq('user_id', currentUser.id).order('created_at', {ascending: false});
+  if (!res.data || res.data.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🥾</div><h3>No bookings yet</h3><p>You haven\'t booked any adventures yet.</p><button class="btn-solid" onclick="switchAppPage(\'adventures\')" style="font-size:15px;padding:12px 28px;border-radius:50px;cursor:pointer;">Browse Adventures</button></div>';
+    return;
+  }
+  el.innerHTML = '<div class="booking-history-list">' + res.data.map(function(b) {
+    var statusClass = b.payment_status === 'paid' ? 'status-confirmed' : 'status-pending';
+    var statusText = b.payment_status === 'paid' ? '✓ Confirmed' : '⏳ Pending';
+    return '<div class="booking-history-item"><div><div class="bhi-ref">' + b.booking_ref + '</div><div class="bhi-name">' + b.adventure_name + '</div><div class="bhi-meta">📅 Booked ' + new Date(b.created_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) + (b.transport ? ' · 🚐 Transport included' : '') + '</div></div><div style="text-align:right"><div class="bhi-amount">ZMW ' + Number(b.amount).toLocaleString() + '</div><span class="bhi-status ' + statusClass + '">' + statusText + '</span></div></div>';
+  }).join('') + '</div>';
+}
+
+// ===== PAYMENT =====
+function openPaymentModal() {
+  if (selectedAdventures.length === 0) return;
+  var total = selectedAdventures.reduce(function(s,a) { return s + a.price; }, 0);
+  document.getElementById('order-items').innerHTML = selectedAdventures.map(function(a) {
+    return '<div class="order-item"><span class="order-item-name">🥾 ' + a.title + '</span><span class="order-item-price">ZMW ' + a.basePrice.toLocaleString() + '</span></div>' +
+      (a.transport ? '<div class="order-item" style="padding-left:16px;opacity:.8"><span class="order-item-name">🚐 Transport</span><span class="order-item-price">ZMW ' + a.transportFee.toLocaleString() + '</span></div>' : '');
+  }).join('');
+  document.getElementById('modal-total').textContent = 'ZMW ' + total.toLocaleString();
+  document.getElementById('payment-modal').classList.add('open');
+}
+
+function closePaymentModal() { document.getElementById('payment-modal').classList.remove('open'); }
+
+function selectPaymentMethod(el, method) {
+  document.querySelectorAll('.payment-method').forEach(function(m) { m.classList.remove('active'); });
+  el.classList.add('active');
+  activePaymentMethod = method;
+  document.getElementById('payment-fields-card').style.display = method === 'card' ? 'block' : 'none';
+  document.getElementById('payment-fields-mobile').style.display = method === 'mobile' ? 'block' : 'none';
+  document.getElementById('payment-fields-bank').style.display = method === 'bank' ? 'block' : 'none';
+}
+
+function formatCardNumber(input) { var v = input.value.replace(/\D/g,'').substring(0,16); input.value = v.replace(/(.{4})/g,'$1 ').trim(); }
+function formatExpiry(input) { var v = input.value.replace(/\D/g,''); if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2); input.value = v; }
+
+async function processPayment() {
+  var btn = document.getElementById('pay-btn');
+  if (activePaymentMethod === 'card') {
+    if (!document.getElementById('card-number').value.replace(/\s/g,'') || !document.getElementById('card-name').value.trim() || !document.getElementById('card-expiry').value.trim() || !document.getElementById('card-cvv').value.trim()) { alert('Please fill in all card details.'); return; }
+  } else if (activePaymentMethod === 'mobile') {
+    if (!document.getElementById('mobile-number').value.trim() || !document.getElementById('mobile-provider').value) { alert('Please fill in mobile money details.'); return; }
+  } else {
+    if (!document.getElementById('bank-ref').value.trim()) { alert('Please enter your bank transfer reference.'); return; }
+  }
+  btn.innerHTML = '<span class="spinner"></span> Processing...';
+  btn.disabled = true;
+  setTimeout(async function() {
+    btn.innerHTML = 'Pay Now'; btn.disabled = false;
+    closePaymentModal();
+    await saveBookings();
+  }, 2200);
+}
+
+async function saveBookings() {
+  var total = selectedAdventures.reduce(function(s,a) { return s + a.price; }, 0);
+  var ref = 'ECT-' + Date.now().toString().slice(-7);
+  var names = selectedAdventures.map(function(a) { return a.title + (a.transport ? ' (+ Transport)' : ''); }).join(', ');
+  var dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+
+  // Save each booking to Supabase
+  for (var i = 0; i < selectedAdventures.length; i++) {
+    var adv = selectedAdventures[i];
+    await sb.from('bookings').insert({
+      user_id: currentUser.id,
+      hike_id: adv.id,
+      adventure_name: adv.title,
+      booking_ref: ref,
+      amount: adv.price,
+      transport: adv.transport,
+      transport_fee: adv.transportFee,
+      payment_status: 'pending',
+      payment_method: activePaymentMethod
+    });
+  }
+
+  // Show success
+  var name = (currentUser.profile && currentUser.profile.full_name) || (currentUser.user_metadata && currentUser.user_metadata.full_name) || currentUser.email;
+  document.getElementById('confirm-email-display').textContent = currentUser.email;
+  document.getElementById('confirm-to').textContent = name + ' <' + currentUser.email + '>';
+  document.getElementById('confirm-ref').textContent = ref;
+  document.getElementById('confirm-adventures').textContent = names;
+  document.getElementById('confirm-amount').textContent = 'ZMW ' + total.toLocaleString();
+  document.getElementById('success-overlay').classList.add('open');
+  spawnConfetti();
+
+  // Send email
+  emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+    to_name: name, to_email: currentUser.email,
+    booking_ref: ref, adventures: names,
+    amount: 'ZMW ' + total.toLocaleString(), date: dateStr,
+    phone: (currentUser.profile && currentUser.profile.phone) || 'N/A',
+    reply_to: 'ecotrekzm@gmail.com'
+  }).then(function() { console.log('Email sent'); }).catch(function(e) { console.error('Email error:', e); });
+}
+
+function closeSuccess() {
+  document.getElementById('success-overlay').classList.remove('open');
+  selectedAdventures = [];
+  updateBookingBar();
+  loadHikes();
+}
+
+// ===== ADMIN DATA =====
+async function loadAdminDashboard() {
+  var hikes = await sb.from('hikes').select('id', {count:'exact'});
+  var bookings = await sb.from('bookings').select('id,booking_ref,amount,payment_status,created_at,adventure_name,profiles(full_name,email)', {count:'exact'});
+  var profiles = await sb.from('profiles').select('id', {count:'exact'});
+
+  document.getElementById('stat-total-hikes').textContent = hikes.count || 0;
+  document.getElementById('stat-total-bookings').textContent = bookings.count || 0;
+  document.getElementById('stat-total-customers').textContent = profiles.count || 0;
+
+  var revenue = (bookings.data || []).filter(function(b) { return b.payment_status === 'paid'; }).reduce(function(s,b) { return s + Number(b.amount); }, 0);
+  document.getElementById('stat-total-revenue').textContent = 'ZMW ' + revenue.toLocaleString();
+
+  var recent = (bookings.data || []).slice(0, 8);
+  document.getElementById('dash-recent-bookings').innerHTML = recent.length === 0 ? '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);">No bookings yet</td></tr>' :
+    recent.map(function(b) {
+      var pName = b.profiles ? (b.profiles.full_name || b.profiles.email) : '–';
+      var sc = b.payment_status === 'paid' ? 'badge-paid' : 'badge-pending';
+      return '<tr><td style="font-family:\'Space Mono\',monospace;font-size:12px;color:var(--gold)">' + b.booking_ref + '</td><td>' + pName + '</td><td>' + b.adventure_name + '</td><td>ZMW ' + Number(b.amount).toLocaleString() + '</td><td><span class="admin-badge ' + sc + '">' + b.payment_status + '</span></td><td>' + new Date(b.created_at).toLocaleDateString('en-GB') + '</td></tr>';
+    }).join('');
+}
+
+async function loadAdminHikes() {
+  var res = await sb.from('hikes').select('*').order('date', {ascending: true});
+  var tbody = document.getElementById('admin-hikes-table');
+  if (!res.data || res.data.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted);">No hikes yet. Add your first hike!</td></tr>'; return; }
+  tbody.innerHTML = res.data.map(function(h) {
+    var dc = {easy:'badge-easy', moderate:'badge-moderate', hard:'badge-hard'};
+    return '<tr>' +
+      '<td style="font-weight:600">' + h.title + '</td>' +
+      '<td>' + h.date + '</td>' +
+      '<td>' + h.location + '</td>' +
+      '<td>ZMW ' + Number(h.price).toLocaleString() + '</td>' +
+      '<td>' + (h.transport_fee ? 'ZMW ' + h.transport_fee : '–') + '</td>' +
+      '<td>' + (h.spots || 0) + '</td>' +
+      '<td><span class="' + (dc[h.difficulty] || 'badge-easy') + '">' + (h.difficulty || 'easy') + '</span></td>' +
+      '<td style="display:flex;gap:6px;flex-wrap:wrap;">' +
+        '<button class="btn-admin-sm btn-edit" onclick="editHike(\'' + h.id + '\')">Edit</button>' +
+        '<button class="btn-admin-sm btn-delete" onclick="deleteHike(\'' + h.id + '\')">Delete</button>' +
+      '</td></tr>';
+  }).join('');
+}
+
+async function loadAdminBookings() {
+  var res = await sb.from('bookings').select('*,profiles(full_name,email)').order('created_at', {ascending: false});
+  var tbody = document.getElementById('admin-bookings-table');
+  if (!res.data || res.data.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted);">No bookings yet</td></tr>'; return; }
+  tbody.innerHTML = res.data.map(function(b) {
+    var pName = b.profiles ? (b.profiles.full_name || b.profiles.email) : '–';
+    var sc = b.payment_status === 'paid' ? 'badge-paid' : 'badge-pending';
+    return '<tr>' +
+      '<td style="font-family:\'Space Mono\',monospace;font-size:12px;color:var(--gold)">' + b.booking_ref + '</td>' +
+      '<td>' + pName + '</td>' +
+      '<td>' + b.adventure_name + '</td>' +
+      '<td>ZMW ' + Number(b.amount).toLocaleString() + '</td>' +
+      '<td>' + (b.transport ? '🚐 Yes' : 'No') + '</td>' +
+      '<td><span class="admin-badge ' + sc + '">' + b.payment_status + '</span></td>' +
+      '<td>' + new Date(b.created_at).toLocaleDateString('en-GB') + '</td>' +
+      '<td>' + (b.payment_status !== 'paid' ? '<button class="btn-admin-sm btn-mark-paid" onclick="markAsPaid(\'' + b.id + '\')">Mark Paid</button>' : '✓') + '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+async function loadAdminCustomers() {
+  var res = await sb.from('profiles').select('*').order('created_at', {ascending: false});
+  var tbody = document.getElementById('admin-customers-table');
+  if (!res.data || res.data.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted);">No customers yet</td></tr>'; return; }
+  // Get booking counts
+  var bcRes = await sb.from('bookings').select('user_id');
+  var bCounts = {};
+  (bcRes.data || []).forEach(function(b) { bCounts[b.user_id] = (bCounts[b.user_id] || 0) + 1; });
+  tbody.innerHTML = res.data.map(function(p) {
+    return '<tr><td style="font-weight:600">' + (p.full_name || '–') + '</td><td>' + (p.email || '–') + '</td><td>' + (p.phone || '–') + '</td><td>' + (p.created_at ? new Date(p.created_at).toLocaleDateString('en-GB') : '–') + '</td><td>' + (bCounts[p.id] || 0) + '</td></tr>';
+  }).join('');
+}
+
+async function loadNotifyHikes() {
+  var res = await sb.from('hikes').select('id,title').order('date', {ascending:true});
+  var sel = document.getElementById('notify-hike-select');
+  sel.innerHTML = '<option value="">– Select a hike –</option>';
+  (res.data || []).forEach(function(h) { sel.innerHTML += '<option value="' + h.id + '">' + h.title + '</option>'; });
+}
+
+// ===== ADMIN ACTIONS =====
+function openHikeModal(hike) {
+  document.getElementById('hike-edit-id').value = '';
+  document.getElementById('hike-modal-title').textContent = 'Add New Hike';
+  document.getElementById('hike-title').value = '';
+  document.getElementById('hike-location').value = '';
+  document.getElementById('hike-date').value = '';
+  document.getElementById('hike-duration').value = '';
+  document.getElementById('hike-distance').value = '';
+  document.getElementById('hike-price').value = '';
+  document.getElementById('hike-transport').value = '';
+  document.getElementById('hike-spots').value = '';
+  document.getElementById('hike-difficulty').value = 'easy';
+  document.getElementById('hike-desc').value = '';
+  document.getElementById('hike-modal-error').style.display = 'none';
+  document.getElementById('hike-modal').classList.add('open');
+}
+
+function closeHikeModal() { document.getElementById('hike-modal').classList.remove('open'); }
+
+async function editHike(id) {
+  var res = await sb.from('hikes').select('*').eq('id', id).single();
+  if (!res.data) return;
+  var h = res.data;
+  document.getElementById('hike-edit-id').value = h.id;
+  document.getElementById('hike-modal-title').textContent = 'Edit Hike';
+  document.getElementById('hike-title').value = h.title || '';
+  document.getElementById('hike-location').value = h.location || '';
+  document.getElementById('hike-date').value = h.date || '';
+  document.getElementById('hike-duration').value = h.duration || '';
+  document.getElementById('hike-distance').value = h.distance || '';
+  document.getElementById('hike-price').value = h.price || '';
+  document.getElementById('hike-transport').value = h.transport_fee || '';
+  document.getElementById('hike-spots').value = h.spots || '';
+  document.getElementById('hike-difficulty').value = h.difficulty || 'easy';
+  document.getElementById('hike-desc').value = h.description || '';
+  document.getElementById('hike-modal').classList.add('open');
+}
+
+async function saveHike() {
+  var title = document.getElementById('hike-title').value.trim();
+  var location = document.getElementById('hike-location').value.trim();
+  var date = document.getElementById('hike-date').value.trim();
+  var price = parseFloat(document.getElementById('hike-price').value);
+  var err = document.getElementById('hike-modal-error');
+
+  if (!title || !location || !date || !price) { showErr(err, 'Please fill in Title, Location, Date and Price.'); return; }
+
+  var data = {
+    title: title, location: location, date: date,
+    duration: document.getElementById('hike-duration').value.trim(),
+    distance: document.getElementById('hike-distance').value.trim(),
+    price: price,
+    transport_fee: parseFloat(document.getElementById('hike-transport').value) || null,
+    spots: parseInt(document.getElementById('hike-spots').value) || 0,
+    difficulty: document.getElementById('hike-difficulty').value,
+    description: document.getElementById('hike-desc').value.trim()
+  };
+
+  var editId = document.getElementById('hike-edit-id').value;
+  var res = editId ? await sb.from('hikes').update(data).eq('id', editId) : await sb.from('hikes').insert(data);
+
+  if (res.error) { showErr(err, res.error.message); return; }
+  closeHikeModal();
+  loadAdminHikes();
+}
+
+async function deleteHike(id) {
+  if (!confirm('Are you sure you want to delete this hike? This cannot be undone.')) return;
+  await sb.from('hikes').delete().eq('id', id);
+  loadAdminHikes();
+}
+
+async function markAsPaid(id) {
+  await sb.from('bookings').update({payment_status: 'paid'}).eq('id', id);
+  loadAdminBookings();
+  loadAdminDashboard();
+}
+
+function exportBookings() {
+  sb.from('bookings').select('*,profiles(full_name,email,phone)').order('created_at', {ascending:false}).then(function(res) {
+    if (!res.data || res.data.length === 0) { alert('No bookings to export.'); return; }
+    var csv = 'Booking Ref,Hiker Name,Email,Phone,Adventure,Amount,Transport,Payment Status,Date\n';
+    res.data.forEach(function(b) {
+      var p = b.profiles || {};
+      csv += [b.booking_ref, p.full_name||'', p.email||'', p.phone||'', b.adventure_name, b.amount, b.transport?'Yes':'No', b.payment_status, new Date(b.created_at).toLocaleDateString('en-GB')].join(',') + '\n';
+    });
+    downloadCSV(csv, 'ecotrek-bookings.csv');
+  });
+}
+
+function exportCustomers() {
+  sb.from('profiles').select('*').order('created_at', {ascending:false}).then(function(res) {
+    if (!res.data || res.data.length === 0) { alert('No customers to export.'); return; }
+    var csv = 'Name,Email,Phone,Joined\n';
+    res.data.forEach(function(p) {
+      csv += [p.full_name||'', p.email||'', p.phone||'', p.created_at ? new Date(p.created_at).toLocaleDateString('en-GB') : ''].join(',') + '\n';
+    });
+    downloadCSV(csv, 'ecotrek-customers.csv');
+  });
+}
+
+function downloadCSV(csv, filename) {
+  var blob = new Blob([csv], {type:'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function sendNotification() {
+  var hikeId = document.getElementById('notify-hike-select').value;
+  var subject = document.getElementById('notify-subject').value.trim();
+  var message = document.getElementById('notify-message').value.trim();
+  var err = document.getElementById('notify-error');
+  var suc = document.getElementById('notify-success');
+
+  if (!hikeId || !subject || !message) { showErr(err, 'Please fill in all fields.'); return; }
+
+  // Get all bookings for this hike with profiles
+  var res = await sb.from('bookings').select('profiles(full_name,email)').eq('hike_id', hikeId);
+  if (!res.data || res.data.length === 0) { showErr(err, 'No bookings found for this hike.'); return; }
+
+  var hike = (await sb.from('hikes').select('title').eq('id', hikeId).single()).data;
+  var sent = 0;
+  for (var i = 0; i < res.data.length; i++) {
+    var p = res.data[i].profiles;
+    if (!p || !p.email) continue;
+    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      to_name: p.full_name || 'Hiker',
+      to_email: p.email,
+      booking_ref: 'NOTIFICATION',
+      adventures: hike ? hike.title : 'Your upcoming hike',
+      amount: subject,
+      date: message,
+      phone: '',
+      reply_to: 'ecotrekzm@gmail.com'
+    });
+    sent++;
+  }
+
+  err.style.display = 'none';
+  suc.textContent = '✓ Notification sent to ' + sent + ' hiker' + (sent !== 1 ? 's' : '') + '!';
+  suc.style.display = 'block';
+  setTimeout(function() { suc.style.display = 'none'; }, 4000);
+}
+
+// ===== CONFETTI =====
+function spawnConfetti() {
+  var wrapper = document.getElementById('confetti-wrapper');
+  wrapper.innerHTML = '';
+  var colors = ['#d4a843','#6db87a','#faf7f2','#e8c06a','#4a7c59'];
+  for (var i = 0; i < 60; i++) {
+    var color = colors[Math.floor(Math.random() * colors.length)];
+    var size = (Math.random() * 10 + 4).toFixed(1);
+    var dur = (Math.random() * 2 + 1.5).toFixed(2);
+    var delay = (Math.random() * 1.5).toFixed(2);
+    var left = (Math.random() * 100).toFixed(1);
+    var drift = ((Math.random() - 0.5) * 200).toFixed(0);
+    var rot = Math.floor(Math.random() * 720);
+    var st = document.createElement('style');
+    st.textContent = '@keyframes cf' + i + '{to{top:110vh;transform:translateX(' + drift + 'px) rotate(' + rot + 'deg);opacity:0;}}';
+    document.head.appendChild(st);
+    var p = document.createElement('div');
+    p.style.cssText = 'position:fixed;top:-20px;left:' + left + 'vw;width:' + size + 'px;height:' + (size*0.6).toFixed(1) + 'px;background:' + color + ';border-radius:' + (Math.random()>0.5?'50%':'2px') + ';opacity:0.85;animation:cf' + i + ' ' + dur + 's linear ' + delay + 's forwards;pointer-events:none;z-index:700;';
+    wrapper.appendChild(p);
+  }
+  setTimeout(function() { wrapper.innerHTML = ''; }, 5000);
+}
+
+// ===== PREVIOUS HIKES DATA =====
+var previousHikes = [
+  {
+    id: 'ph1',
+    title: 'Kafue Hills Sunrise Expedition',
+    location: 'Kafue Hills, Lusaka',
+    date: 'March 2026',
+    hikers: 34,
+    distance: '14 km',
+    duration: '7 hrs',
+    desc: 'An unforgettable dawn assault on Kafue\'s rugged ridgeline. The kind of sunrise that makes you forget your tired legs.',
+    photos: ['hike5.jpg','hike4.jpg','hike3.jpg']
+  },
+  {
+    id: 'ph2',
+    title: 'Community Trail: Green Heart Loop',
+    location: 'Kafue Hills, Lusaka',
+    date: 'February 2026',
+    hikers: 28,
+    distance: '9 km',
+    duration: '5 hrs',
+    desc: 'Open-level group hike drawing beginners and veterans alike. Good vibes, great company, zero bad weather.',
+    photos: ['hike2.jpg','hike5.jpg','hike6.jpg']
+  },
+  {
+    id: 'ph3',
+    title: 'Mountain of God: Forest 27',
+    location: 'Forest 27, Lusaka',
+    date: 'March 2025',
+    hikers: 22,
+    distance: '11 km',
+    duration: '6 hrs',
+    desc: 'A spiritual summit with sweeping views across the capital. Every hiker who made it said it changed them.',
+    photos: ['hike1.jpg','hike3.jpg','hike4.jpg']
+  },
+  {
+    id: 'ph4',
+    title: 'Hike & Cruise Adventure',
+    location: 'Kafue Hills + River, Lusaka',
+    date: 'January 2026',
+    hikers: 18,
+    distance: '8 km',
+    duration: '9 hrs',
+    desc: 'A double-feature day: morning ridge hike followed by an afternoon cruise on the Kafue. Best day ever, full stop.',
+    photos: ['hike6.jpg','hike5.jpg','hike2.jpg']
+  },
+  {
+    id: 'ph5',
+    title: 'Squad Sunrise: Bootcamp Edition',
+    location: 'Kafue Hills, Lusaka',
+    date: 'November 2025',
+    hikers: 41,
+    distance: '10 km',
+    duration: '5 hrs',
+    desc: 'EcoTrek\'s biggest group hike to date. Lace up, show up — that\'s the only rule that matters.',
+    photos: ['hike3.jpg','hike1.jpg','hike6.jpg']
+  }
+];
+
+function buildStoryCard(hike, inApp) {
+  var total = hike.photos.length;
+  var slidesHTML = hike.photos.map(function(p, i) {
+    return '<div class="story-slide"><img src="' + p + '" alt="' + hike.title + ' photo ' + (i+1) + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=story-slide-placeholder>🥾</div>\'">' +
+           '<div class="story-overlay"></div></div>';
+  }).join('');
+
+  var dotsHTML = hike.photos.map(function(_, i) {
+    return '<button class="story-dot' + (i===0?' active':'') + '" onclick="storyGoTo(\''+hike.id+'\','+i+')" aria-label="Photo '+(i+1)+'"></button>';
+  }).join('');
+
+  return '<div class="hike-story-card" id="sc-' + hike.id + '">' +
+    '<div class="story-carousel">' +
+      '<div class="story-track" id="st-' + hike.id + '">' + slidesHTML + '</div>' +
+      '<button class="story-nav story-nav-prev" onclick="storyMove(\''+hike.id+'\',-1)">‹</button>' +
+      '<button class="story-nav story-nav-next" onclick="storyMove(\''+hike.id+'\',1)">›</button>' +
+      '<div class="story-dots" id="sd-' + hike.id + '">' + dotsHTML + '</div>' +
+      '<div class="story-date-badge">' + hike.date + '</div>' +
+      '<div class="story-photo-count" id="spc-' + hike.id + '">1 / ' + total + '</div>' +
+    '</div>' +
+    '<div class="story-body">' +
+      '<div class="story-location">📍 ' + hike.location + '</div>' +
+      '<div class="story-title">' + hike.title + '</div>' +
+      '<div class="story-desc">' + hike.desc + '</div>' +
+      '<div class="story-stats">' +
+        '<div class="story-stat">👥 <span>' + hike.hikers + ' hikers</span></div>' +
+        '<div class="story-stat">📏 <span>' + hike.distance + '</span></div>' +
+        '<div class="story-stat">⏱ <span>' + hike.duration + '</span></div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+var storyIndexes = {};
+
+function storyGoTo(id, idx) {
+  var hike = previousHikes.find(function(h){return h.id===id;});
+  if (!hike) return;
+  var total = hike.photos.length;
+  idx = (idx + total) % total;
+  storyIndexes[id] = idx;
+  var track = document.getElementById('st-' + id);
+  if (track) track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  var dotsEl = document.getElementById('sd-' + id);
+  if (dotsEl) dotsEl.querySelectorAll('.story-dot').forEach(function(d, i) {
+    d.className = 'story-dot' + (i === idx ? ' active' : '');
+  });
+  var counter = document.getElementById('spc-' + id);
+  if (counter) counter.textContent = (idx + 1) + ' / ' + total;
+}
+
+function storyMove(id, dir) {
+  var cur = storyIndexes[id] || 0;
+  storyGoTo(id, cur + dir);
+}
+
+function renderPreviousHikes(containerId) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  previousHikes.forEach(function(hike) {
+    storyIndexes[hike.id] = 0;
+    container.innerHTML += buildStoryCard(hike, containerId !== 'prev-hikes-row');
+  });
+}
+
+function scrollPrevHikes(dir) {
+  var wrap = document.getElementById('prev-hikes-scroll');
+  if (wrap) wrap.scrollBy({left: dir * 380, behavior: 'smooth'});
+}
+
+// ===== CAROUSEL =====
+var slideData = [
+  {tag:'🌿 Kafue Hills · March 2026', title:'Zambia\'s green heart,<br>as far as the eye can see', sub:'The view that makes every step worth it.'},
+  {tag:'🥾 Community Hikes · Feb 2026', title:'Good vibes only<br>on this trail', sub:'Weekly group hikes open to all fitness levels.'},
+  {tag:'⛰️ Forest 27 · March 2025', title:'Made it to the<br>Mountain of God', sub:'Every summit tells a story worth telling.'},
+  {tag:'😅 Trail Life · Kafue Hills 2026', title:'Rest stops hit different<br>in the bush', sub:'Real people, real trails, real memories.'},
+  {tag:'👟 Squad Goals · Kafue Hills 2026', title:'Every great hike starts<br>with the right crew', sub:'Lace up and show up — that\'s all it takes.'},
+  {tag:'🚢 Hike & Cruise · Kafue Hills 2026', title:'Hike done. Cruise next.<br>Best day ever.', sub:'Because some adventures end on the water.'},
+  {tag:'🤝 The Squad · Kafue Hills 2026', title:'Heads together,<br>hearts on the trail', sub:'This is what community looks like at the summit.'}
+];
+
+function carouselInit() {
+  var dotsEl = document.getElementById('carousel-dots');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = '';
+  for (var i = 0; i < carouselTotal; i++) {
+    var dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    (function(idx) { dot.addEventListener('click', function() { carouselGoTo(idx); }); })(i);
+    dotsEl.appendChild(dot);
+  }
+  carouselAutoPlay();
+}
+
+function carouselMove(dir) { carouselGoTo((carouselIndex + dir + carouselTotal) % carouselTotal); }
+
+function carouselGoTo(idx) {
+  carouselIndex = idx;
+  var track = document.getElementById('carousel-track');
+  if (track) track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  document.querySelectorAll('.carousel-dot').forEach(function(d, i) { d.className = 'carousel-dot' + (i === idx ? ' active' : ''); });
+  clearInterval(carouselTimer);
+  carouselAutoPlay();
+}
+
+function carouselAutoPlay() {
+  carouselTimer = setInterval(function() { carouselGoTo((carouselIndex + 1) % carouselTotal); }, 5000);
+}
+
+// START
+init();
+
+})();
+</script>
+</body>
+</html>
