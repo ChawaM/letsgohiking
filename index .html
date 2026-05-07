@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrek Adventures – Let's Go Hiking Zambia</title>
+<link rel="icon" type="image/jpeg" href="logo.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1a3a2a;--deep:#0d2218;--moss:#2d5a3d;--leaf:#6db87a;--gold:#d4a843;--amber:#e8c06a;--white:#faf7f2;--muted:#6b8a74;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);min-height:100vh;overflow-x:hidden;}
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+/* LANDING */
+#landing{position:relative;overflow:hidden;}
+.land-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%,rgba(45,90,61,.4) 0%,transparent 60%),linear-gradient(160deg,#0d2218 0%,#1a3a2a 40%,#0d1f16 100%);}
+.land-nav{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:28px 60px;}
+.logo{display:flex;align-items:center;}
+.logo-img{height:52px;width:auto;object-fit:contain;border-radius:6px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));}
+.logo-img-auth{height:90px;width:auto;object-fit:contain;border-radius:8px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));}
+.land-nav-btns{display:flex;gap:12px;}
+.btn-outline{padding:10px 24px;border:1.5px solid rgba(109,184,122,.5);background:transparent;color:var(--leaf);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;border-radius:50px;cursor:pointer;transition:all .3s;}
+.btn-outline:hover{background:rgba(109,184,122,.1);color:var(--white);}
+.btn-solid{padding:10px 24px;border:1.5px solid var(--gold);background:var(--gold);color:var(--deep);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;border-radius:50px;cursor:pointer;transition:all .3s;}
+.btn-solid:hover{background:var(--amber);transform:translateY(-1px);}
+.land-hero{position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;text-align:center;padding:80px 40px 60px;}
+.land-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(109,184,122,.12);border:1px solid rgba(109,184,122,.3);border-radius:50px;padding:6px 16px;margin-bottom:32px;font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);letter-spacing:2px;text-transform:uppercase;}
+.land-badge::before{content:'';width:6px;height:6px;background:var(--leaf);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.land-title{font-family:'Playfair Display',serif;font-size:clamp(52px,8vw,100px);font-weight:900;line-height:.95;letter-spacing:-2px;margin-bottom:28px;}
+.land-title .highlight{color:var(--gold);display:block;font-style:italic;}
+.land-title .outline-text{-webkit-text-stroke:2px rgba(255,255,255,.2);color:transparent;}
+.land-desc{max-width:520px;font-size:17px;font-weight:300;color:rgba(250,247,242,.7);line-height:1.7;margin-bottom:44px;}
+.land-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.btn-hero{padding:16px 40px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-hero-primary{background:var(--gold);border:2px solid var(--gold);color:var(--deep);}
+.btn-hero-primary:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,168,67,.4);}
+.btn-hero-secondary{background:transparent;border:2px solid rgba(250,247,242,.25);color:var(--white);}
+.btn-hero-secondary:hover{border-color:rgba(250,247,242,.6);}
+.land-mountains{position:relative;z-index:3;width:100%;margin-top:60px;height:220px;overflow:hidden;}
+.land-mountains svg{width:100%;height:100%;}
+.land-stats{position:relative;z-index:5;display:flex;justify-content:center;gap:60px;padding:50px 40px;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--gold);line-height:1;}
+.stat-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:6px;font-family:'Space Mono',monospace;}
+.land-features{position:relative;z-index:5;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;padding:20px 60px 80px;}
+.feat-card{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.15);border-radius:16px;padding:28px;transition:all .3s;}
+.feat-card:hover{transform:translateY(-4px);border-color:rgba(109,184,122,.3);}
+.feat-icon{font-size:28px;margin-bottom:12px;}
+.feat-title{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:8px;}
+.feat-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* AUTH */
+#signup,#login{min-height:100vh;display:none;align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 40%,rgba(45,90,61,.3) 0%,transparent 60%),linear-gradient(135deg,#0d2218 0%,#1a3a2a 100%);padding:40px 20px;}
+#signup.active,#login.active{display:flex;}
+.auth-card{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.2);border-radius:24px;padding:48px 44px;width:100%;max-width:440px;}
+.auth-logo{text-align:center;margin-bottom:32px;}
+.auth-logo .logo-main{font-size:26px;}
+.auth-logo .logo-sub{font-size:11px;margin-top:4px;display:block;}
+.auth-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;text-align:center;margin-bottom:8px;}
+.auth-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:32px;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:13px;font-weight:500;color:rgba(250,247,242,.7);margin-bottom:7px;}
+.form-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(109,184,122,.2);border-radius:10px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;transition:all .3s;outline:none;}
+.form-input:focus{border-color:var(--leaf);background:rgba(109,184,122,.08);}
+.form-input::placeholder{color:rgba(250,247,242,.3);}
+.btn-full{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:var(--deep);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;margin-top:8px;}
+.btn-full:hover{background:var(--amber);transform:translateY(-1px);}
+.auth-switch{text-align:center;margin-top:20px;font-size:14px;color:var(--muted);}
+.auth-switch a{color:var(--leaf);cursor:pointer;font-weight:500;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;margin-bottom:28px;}
+.back-link:hover{color:var(--leaf);}
+.error-msg{background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.4);border-radius:8px;padding:10px 14px;font-size:13px;color:#e74c3c;margin-bottom:16px;display:none;}
+
+/* APP */
+#app{display:none;min-height:100vh;background:linear-gradient(180deg,#0d2218 0%,#111d16 100%);flex-direction:column;}
+#app.active{display:flex;}
+.dash-nav{display:flex;justify-content:space-between;align-items:center;padding:0 50px;height:64px;border-bottom:1px solid rgba(109,184,122,.1);background:rgba(13,34,24,.95);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;flex-shrink:0;}
+.dash-nav-center{display:flex;gap:4px;}
+.nav-tab{padding:8px 18px;border-radius:50px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border:1px solid transparent;background:transparent;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px;transition:all .25s;}
+.nav-tab:hover{color:var(--white);background:rgba(255,255,255,.06);}
+.nav-tab.active{color:var(--gold);background:rgba(212,168,67,.1);border-color:rgba(212,168,67,.2);}
+.tab-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:none;}
+.nav-tab.active .tab-dot{display:block;}
+.dash-user{display:flex;align-items:center;gap:12px;}
+.dash-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--white);}
+.dash-username{font-size:14px;color:rgba(250,247,242,.8);}
+.dash-username span{font-weight:600;color:var(--white);}
+.btn-logout{padding:7px 18px;background:transparent;border:1px solid rgba(192,57,43,.4);color:rgba(231,76,60,.8);border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.btn-logout:hover{background:rgba(192,57,43,.1);color:#e74c3c;}
+.app-page{display:none;flex:1;padding:40px 50px 140px;animation:fadeUp .35s ease;}
+.app-page.active{display:block;}
+.adv-page-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);text-transform:uppercase;letter-spacing:3px;margin-bottom:10px;}
+.adv-page-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1.1;margin-bottom:8px;}
+.adv-page-title .gold{color:var(--gold);}
+.adv-page-sub{color:var(--muted);font-size:15px;max-width:500px;margin-bottom:32px;}
+
+/* CARDS */
+.adventures-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+.adventure-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(109,184,122,.15);border-radius:20px;overflow:hidden;transition:all .35s;cursor:pointer;position:relative;}
+.adventure-card:hover{transform:translateY(-6px);border-color:rgba(109,184,122,.4);}
+.adventure-card.selected{border-color:var(--gold);background:rgba(212,168,67,.06);box-shadow:0 0 0 1px var(--gold);}
+.card-image{height:180px;position:relative;overflow:hidden;}
+.card-image svg{width:100%;height:100%;position:absolute;}
+.card-badge{position:absolute;top:14px;right:14px;background:rgba(13,34,24,.85);border:1px solid rgba(212,168,67,.4);border-radius:50px;padding:5px 12px;font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);z-index:2;}
+.selected-check{position:absolute;top:14px;left:14px;width:28px;height:28px;background:var(--gold);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:14px;z-index:2;animation:popIn .3s ease;}
+.adventure-card.selected .selected-check{display:flex;}
+@keyframes popIn{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
+.card-body{padding:20px 22px 22px;}
+.card-difficulty{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.diff-easy{color:var(--leaf);}
+.diff-moderate{color:var(--amber);}
+.diff-hard{color:#e07b50;}
+.card-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.card-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.meta-row{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(250,247,242,.65);}
+.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid rgba(109,184,122,.1);}
+.card-price{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--gold);}
+.card-price span{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;color:var(--muted);}
+/* TRANSPORT TOGGLE */
+.transport-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.2);border-radius:10px;margin:0 22px 16px;gap:10px;}
+.transport-left{display:flex;align-items:center;gap:10px;}
+.transport-icon{font-size:18px;}
+.transport-label{font-size:13px;font-weight:500;color:var(--white);line-height:1.3;}
+.transport-fee{font-size:11px;color:var(--gold);font-family:'Space Mono',monospace;}
+.transport-toggle{position:relative;width:42px;height:24px;flex-shrink:0;}
+.transport-toggle input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.15);border-radius:24px;cursor:pointer;transition:background .3s;}
+.toggle-track::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:var(--white);border-radius:50%;transition:transform .3s;}
+.transport-toggle input:checked + .toggle-track{background:var(--gold);}
+.transport-toggle input:checked + .toggle-track::before{transform:translateX(18px);background:var(--deep);}
+.card-price-wrap{display:flex;flex-direction:column;gap:2px;}
+.card-price-total{font-size:11px;color:var(--leaf);font-family:'Space Mono',monospace;}
+.btn-select{padding:9px 22px;border-radius:50px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .3s;border:1.5px solid rgba(109,184,122,.4);background:transparent;color:var(--leaf);}
+.adventure-card.selected .btn-select{background:var(--gold);border-color:var(--gold);color:var(--deep);}
+
+/* BOOKINGS PAGE */
+.empty-state{text-align:center;padding:80px 20px;color:var(--muted);}
+.empty-state .empty-icon{font-size:52px;margin-bottom:16px;}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--white);margin-bottom:8px;}
+.empty-state p{font-size:15px;margin-bottom:24px;}
+.booking-history-list{display:flex;flex-direction:column;gap:14px;}
+.booking-history-item{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.15);border-radius:14px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+.bhi-ref{font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:6px;}
+.bhi-name{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;}
+.bhi-meta{font-size:13px;color:var(--muted);}
+.bhi-amount{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);}
+.bhi-status{display:inline-block;margin-top:6px;padding:3px 12px;background:rgba(109,184,122,.12);border:1px solid rgba(109,184,122,.3);border-radius:50px;font-size:11px;color:var(--leaf);font-family:'Space Mono',monospace;}
+
+/* PROFILE PAGE */
+.profile-card{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.15);border-radius:20px;padding:36px;max-width:540px;margin-bottom:24px;}
+.profile-avatar-big{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:30px;font-weight:700;margin-bottom:20px;}
+.profile-name{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:4px;}
+.profile-email-text{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.profile-field{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;}
+.profile-field:last-child{border-bottom:none;}
+.profile-field-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace;}
+.profile-field-val{font-size:15px;}
+
+/* BOOKING BAR */
+.booking-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(13,34,24,.95);border-top:1px solid rgba(109,184,122,.2);backdrop-filter:blur(20px);padding:16px 50px;display:flex;justify-content:space-between;align-items:center;z-index:200;transform:translateY(100%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+.booking-bar.visible{transform:translateY(0);}
+.booking-bar-left{display:flex;align-items:center;gap:20px;}
+.booking-count{background:var(--gold);color:var(--deep);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;}
+.booking-info{font-size:14px;}
+.booking-total{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--gold);}
+.booking-sublabel{font-size:12px;color:var(--muted);margin-top:2px;}
+.btn-book-now{padding:14px 36px;background:var(--gold);border:none;border-radius:50px;color:var(--deep);font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;}
+.btn-book-now:hover{background:var(--amber);transform:translateY(-2px);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:linear-gradient(145deg,#1a3a2a,#0d2218);border:1px solid rgba(109,184,122,.25);border-radius:24px;padding:40px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;}
+.modal-close{background:rgba(255,255,255,.08);border:none;color:var(--white);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:rgba(255,255,255,.15);}
+.order-summary{background:rgba(255,255,255,.04);border-radius:12px;padding:16px;margin-bottom:24px;}
+.order-summary-title{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:12px;}
+.order-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:14px;}
+.order-item:last-child{border-bottom:none;}
+.order-item-name{color:rgba(250,247,242,.8);}
+.order-item-price{font-family:'Space Mono',monospace;color:var(--gold);}
+.order-total{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(109,184,122,.2);margin-top:8px;font-weight:600;font-size:16px;}
+.order-total-amount{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);}
+.payment-section-title{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:14px;margin-top:20px;}
+.card-number-field{position:relative;}
+.card-icons{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.payment-methods{display:flex;gap:10px;margin-bottom:20px;}
+.payment-method{flex:1;padding:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(109,184,122,.15);border-radius:10px;cursor:pointer;text-align:center;font-size:13px;color:var(--muted);transition:all .2s;font-family:'DM Sans',sans-serif;}
+.payment-method.active{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,.06);}
+.pm-icon{font-size:20px;margin-bottom:4px;}
+
+/* SUCCESS */
+.success-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;}
+.success-overlay.open{display:flex;}
+.success-card{background:linear-gradient(145deg,#1a3a2a,#0d2218);border:1px solid rgba(109,184,122,.3);border-radius:24px;padding:50px 40px;max-width:460px;width:100%;text-align:center;}
+.success-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--moss),var(--leaf));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px;}
+.success-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;margin-bottom:12px;}
+.success-sub{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:30px;}
+.success-email-preview{background:rgba(255,255,255,.04);border:1px solid rgba(109,184,122,.2);border-radius:12px;padding:20px;text-align:left;margin-bottom:28px;}
+.email-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--leaf);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;}
+.email-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;color:rgba(250,247,242,.7);border-bottom:1px solid rgba(255,255,255,.05);}
+.email-row:last-child{border-bottom:none;}
+.email-row strong{color:var(--white);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+/* HERO CAROUSEL */
+.hero-carousel-wrap{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;}
+.land-nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:28px 60px;background:linear-gradient(to bottom,rgba(13,34,24,.75) 0%,transparent 100%);}
+.carousel-track{display:flex;height:100%;transition:transform .9s cubic-bezier(.4,0,.2,1);}
+.carousel-slide{min-width:100%;height:100vh;min-height:600px;position:relative;flex-shrink:0;}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+.carousel-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,34,24,.92) 0%,rgba(13,34,24,.4) 50%,rgba(13,34,24,.1) 100%);}
+.hero-content{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 40px 160px;pointer-events:none;}
+.hero-content .land-cta{pointer-events:all;}
+.hero-content .land-nav-btns button{pointer-events:all;}
+.land-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(13,34,24,.65);border:1px solid rgba(109,184,122,.5);border-radius:50px;padding:6px 16px;margin-bottom:20px;font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);letter-spacing:2px;text-transform:uppercase;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.land-badge::before{content:'';width:6px;height:6px;background:var(--leaf);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.slide-label{display:block;font-family:'Space Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.hero-main-title{display:block;font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,82px);font-weight:900;line-height:1.05;letter-spacing:-1px;color:var(--white);}
+.land-title{margin-bottom:20px;}
+.land-desc{max-width:540px;font-size:17px;font-weight:300;color:rgba(250,247,242,.75);line-height:1.7;margin-bottom:40px;}
+.land-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.btn-hero{padding:16px 40px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-hero-primary{background:var(--gold);border:2px solid var(--gold);color:var(--deep);}
+.btn-hero-primary:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,168,67,.4);}
+.btn-hero-secondary{background:rgba(250,247,242,.08);border:2px solid rgba(250,247,242,.3);color:var(--white);backdrop-filter:blur(6px);}
+.btn-hero-secondary:hover{border-color:rgba(250,247,242,.6);background:rgba(250,247,242,.15);}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:20;background:rgba(13,34,24,.45);border:1px solid rgba(250,247,242,.2);color:var(--white);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:all .3s;backdrop-filter:blur(8px);}
+.carousel-btn:hover{background:rgba(212,168,67,.3);border-color:var(--gold);}
+.carousel-btn-prev{left:24px;}
+.carousel-btn-next{right:24px;}
+.hero-bottom{position:absolute;bottom:28px;left:0;right:0;z-index:20;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.carousel-dots{display:flex;gap:8px;}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(250,247,242,.3);cursor:pointer;transition:all .35s;border:none;padding:0;}
+.carousel-dot.active{background:var(--gold);width:24px;border-radius:4px;}
+.carousel-insta-link{font-family:'Space Mono',monospace;font-size:11px;color:rgba(250,247,242,.45);text-decoration:none;letter-spacing:1px;transition:color .2s;}
+.carousel-caption{position:absolute;bottom:0;left:0;right:0;padding:28px 50px 90px;z-index:10;background:linear-gradient(to top,rgba(13,34,24,.9) 0%,transparent 100%);}
+.carousel-caption-tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;}
+.carousel-caption-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--white);line-height:1.25;max-width:520px;margin-bottom:4px;}
+.carousel-caption-sub{font-size:13px;color:rgba(250,247,242,.6);}
+/* Photo upload panel */
+.photo-upload-panel{background:rgba(13,34,24,.97);border-top:1px solid rgba(109,184,122,.2);padding:20px 50px;position:relative;z-index:5;}
+.pup-title{font-family:'Space Mono',monospace;font-size:11px;color:var(--leaf);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+.pup-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.pup-slot{position:relative;width:90px;height:68px;border:1.5px dashed rgba(109,184,122,.3);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s;flex-shrink:0;}
+.pup-slot:hover{border-color:var(--gold);}
+.pup-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.pup-slot-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;gap:3px;pointer-events:none;}
+.pup-slot-label span{font-size:16px;}
+.pup-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.pup-hint{font-size:12px;color:var(--muted);margin-top:10px;}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(13,34,24,.3);border-top-color:var(--deep);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--deep);}
+::-webkit-scrollbar-thumb{background:var(--moss);border-radius:3px;}
+@media(max-width:768px){
+  .land-nav{padding:16px 20px;}
+  .land-features{padding:20px 24px 60px;}
+  .land-stats{gap:30px;}
+  .hero-content{padding:80px 24px 140px;}
+  .carousel-btn-prev{left:10px;}
+  .carousel-btn-next{right:10px;}
+  .dash-nav{padding:0 16px;flex-wrap:wrap;height:auto;padding-top:12px;padding-bottom:12px;gap:8px;}
+  .dash-nav-center{order:3;width:100%;justify-content:center;padding-bottom:4px;}
+  .app-page{padding:24px 16px 140px;}
+  .booking-bar{padding:12px 16px;}
+}
+
+/* ============ ADMIN PORTAL ============ */
+#admin{display:none;min-height:100vh;background:linear-gradient(180deg,#0a1a12 0%,#0d2218 100%);flex-direction:column;}
+#admin.active{display:flex;}
+.admin-nav{display:flex;justify-content:space-between;align-items:center;padding:0 50px;height:64px;border-bottom:1px solid rgba(212,168,67,.2);background:rgba(10,26,18,.97);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;flex-shrink:0;}
+.admin-badge{background:rgba(212,168,67,.12);border:1px solid rgba(212,168,67,.35);border-radius:50px;padding:5px 14px;font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;}
+.admin-nav-tabs{display:flex;gap:4px;}
+.admin-body{flex:1;padding:40px 50px 60px;animation:fadeUp .35s ease;}
+.admin-section-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;margin-bottom:6px;}
+.admin-section-sub{color:var(--muted);font-size:14px;margin-bottom:32px;}
+
+/* Admin form card */
+.admin-card{background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.15);border-radius:20px;padding:32px;margin-bottom:28px;}
+.admin-card-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;color:var(--gold);display:flex;align-items:center;gap:10px;}
+.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.admin-form-grid .span2{grid-column:1/-1;}
+.admin-form-grid .form-group{margin-bottom:0;}
+.admin-color-row{display:flex;gap:12px;align-items:center;}
+.admin-color-input{width:48px;height:38px;border-radius:8px;border:1.5px solid rgba(109,184,122,.2);cursor:pointer;padding:2px;background:rgba(255,255,255,.06);}
+.admin-color-label{font-size:13px;color:var(--muted);}
+.btn-admin-save{padding:12px 32px;background:var(--gold);border:none;border-radius:10px;color:var(--deep);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:8px;}
+.btn-admin-save:hover{background:var(--amber);transform:translateY(-1px);}
+.btn-admin-danger{padding:8px 18px;background:transparent;border:1px solid rgba(192,57,43,.4);color:rgba(231,76,60,.8);border-radius:8px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.btn-admin-danger:hover{background:rgba(192,57,43,.1);}
+.admin-success-toast{background:rgba(109,184,122,.12);border:1px solid rgba(109,184,122,.35);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--leaf);margin-bottom:20px;display:none;animation:fadeUp .3s ease;}
+
+/* Adventures manage list */
+.admin-adv-list{display:flex;flex-direction:column;gap:12px;}
+.admin-adv-item{background:rgba(255,255,255,.03);border:1px solid rgba(109,184,122,.12);border-radius:14px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.admin-adv-item-info{}
+.admin-adv-item-title{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:4px;}
+.admin-adv-item-meta{font-size:13px;color:var(--muted);}
+.admin-adv-item-price{font-family:'Space Mono',monospace;font-size:14px;color:var(--gold);}
+.admin-adv-item-actions{display:flex;gap:8px;align-items:center;}
+
+/* Photo manager */
+.admin-photo-section{margin-bottom:32px;}
+.admin-photo-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+.admin-photo-slot{position:relative;width:160px;height:110px;border-radius:12px;overflow:hidden;border:1.5px solid rgba(109,184,122,.2);background:rgba(255,255,255,.03);}
+.admin-photo-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.admin-photo-slot-overlay{position:absolute;inset:0;background:rgba(13,34,24,.7);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;gap:4px;}
+.admin-photo-slot:hover .admin-photo-slot-overlay{opacity:1;}
+.admin-photo-slot-tag{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-family:'Space Mono',monospace;font-size:9px;color:rgba(250,247,242,.7);letter-spacing:1px;background:rgba(13,34,24,.6);padding:2px 0;}
+.admin-photo-delete{background:rgba(192,57,43,.8);border:none;color:#fff;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.admin-photo-edit-meta{background:rgba(212,168,67,.8);border:none;color:var(--deep);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;}
+.admin-add-photo-btn{width:160px;height:110px;border-radius:12px;border:1.5px dashed rgba(109,184,122,.3);background:rgba(255,255,255,.02);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;gap:6px;transition:all .2s;position:relative;}
+.admin-add-photo-btn:hover{border-color:var(--gold);color:var(--gold);}
+.admin-add-photo-btn span{font-size:24px;}
+.admin-add-photo-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+
+/* Meta edit modal */
+.admin-meta-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;}
+.admin-meta-modal.open{display:flex;}
+.admin-meta-card{background:linear-gradient(145deg,#1a3a2a,#0d2218);border:1px solid rgba(212,168,67,.25);border-radius:20px;padding:36px;width:100%;max-width:480px;}
+.admin-meta-card h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;}
+
+@media(max-width:768px){
+  .admin-nav{padding:0 16px;flex-wrap:wrap;height:auto;padding:12px 16px;gap:8px;}
+  .admin-nav-tabs{order:3;width:100%;justify-content:center;}
+  .admin-body{padding:24px 16px 60px;}
+  .admin-form-grid{grid-template-columns:1fr;}
+  .admin-form-grid .span2{grid-column:1;}
+}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing" class="page active">
+
+  <!-- HERO CAROUSEL — full screen, nav + CTA float on top -->
+  <div class="hero-carousel-wrap" id="carousel-wrap">
+
+    <!-- Floating nav -->
+    <nav class="land-nav">
+      <div class="logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img"></div>
+      <div class="land-nav-btns">
+        <button class="btn-outline" onclick="showPage('login')">Sign In</button>
+        <button class="btn-solid" onclick="showPage('signup')">Join Us</button>
+      </div>
+    </nav>
+
+    <!-- Slides -->
+    <div class="carousel-track" id="carousel-track">
+
+      <div class="carousel-slide" id="slide-0">
+        <img class="slide-img" src="hike5.jpg" alt="Kafue Hills panoramic view">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">
+          <div class="carousel-caption-tag">🌿 Kafue Hills · March 2026</div>
+          <div class="carousel-caption-title">Zambia's green heart, as far as the eye can see</div>
+          <div class="carousel-caption-sub">The view that makes every step worth it</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" id="slide-1">
+        <img class="slide-img" src="hike2.jpg" alt="Happy hikers on trail">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">
+          <div class="carousel-caption-tag">🥾 Community Hikes · Feb 2026</div>
+          <div class="carousel-caption-title">Good vibes only on this trail</div>
+          <div class="carousel-caption-sub">Weekly group hikes open to all fitness levels</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" id="slide-2">
+        <img class="slide-img" src="hike1.jpg" alt="Mountain of God summit">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">
+          <div class="carousel-caption-tag">⛰️ Forest 27 · March 2025</div>
+          <div class="carousel-caption-title">Made it to the Mountain of God</div>
+          <div class="carousel-caption-sub">Every summit tells a story worth telling</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" id="slide-3">
+        <img class="slide-img" src="hike4.jpg" alt="Group resting on trail">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">
+          <div class="carousel-caption-tag">😅 Trail Life · Kafue Hills 2026</div>
+          <div class="carousel-caption-title">Rest stops hit different in the bush</div>
+          <div class="carousel-caption-sub">Real people, real trails, real memories</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" id="slide-4">
+        <img class="slide-img" src="hike3.jpg" alt="Hikers boots in a circle">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">
+          <div class="carousel-caption-tag">👟 Squad Goals · Kafue Hills 2026</div>
+          <div class="carousel-caption-title">Every great hike starts with the right crew</div>
+          <div class="carousel-caption-sub">Lace up and show up — that's all it takes</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" id="slide-5">
+        <img class="slide-img" src="hike6.jpg" alt="Group after Kafue cruise">
+        <div class="carousel-overlay"></div>
+        <div class="carousel-caption">
+          <div class="carousel-caption-tag">🚢 Hike & Cruise · Kafue Hills March 2026</div>
+          <div class="carousel-caption-title">Hike done. Cruise next. Best day ever.</div>
+          <div class="carousel-caption-sub">Because some adventures end on the water</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Floating CTA centred — title + buttons only, no mood text -->
+    <div class="hero-content">
+      <div class="land-badge">🌿 Zambia's Premier Eco-Adventure</div>
+      <h1 class="land-title"><span class="hero-main-title">Let's Go Hiking<br><em style="color:var(--gold)">Zambia</em></span></h1>
+      <p class="land-desc">Guided hikes, wellness retreats &amp; corporate adventures across Zambia's most breathtaking landscapes.</p>
+      <div class="land-cta">
+        <button class="btn-hero btn-hero-primary" onclick="showPage('signup')">Book Your Adventure</button>
+        <button class="btn-hero btn-hero-secondary" onclick="showPage('login')">I Have an Account</button>
+      </div>
+    </div>
+
+    <!-- Arrows -->
+    <button class="carousel-btn carousel-btn-prev" onclick="carouselMove(-1)">‹</button>
+    <button class="carousel-btn carousel-btn-next" onclick="carouselMove(1)">›</button>
+
+    <!-- Dots + Instagram link at bottom -->
+    <div class="hero-bottom">
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <a class="carousel-insta-link" href="https://www.instagram.com/letsgohiking_zm/" target="_blank">
+        📷 @letsgohiking_zm
+      </a>
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+  <div class="land-stats">
+    <div class="stat-item"><div class="stat-num">120+</div><div class="stat-label">Trails Covered</div></div>
+    <div class="stat-item"><div class="stat-num">3,400</div><div class="stat-label">Happy Hikers</div></div>
+    <div class="stat-item"><div class="stat-num">8yr</div><div class="stat-label">In Business</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Eco-Certified</div></div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="land-features">
+    <div class="feat-card"><div class="feat-icon">🥾</div><div class="feat-title">Guided Hikes</div><div class="feat-desc">Expert local guides lead you through Zambia's most breathtaking trails safely and sustainably.</div></div>
+    <div class="feat-card"><div class="feat-icon">🏕️</div><div class="feat-title">Camping Adventures</div><div class="feat-desc">Multi-day wilderness camping experiences that connect you deeply with Zambia's natural heritage.</div></div>
+    <div class="feat-card"><div class="feat-icon">🧘</div><div class="feat-title">Wellness Retreats</div><div class="feat-desc">Mindfulness and fitness programs in the heart of nature for physical and mental rejuvenation.</div></div>
+    <div class="feat-card"><div class="feat-icon">🤝</div><div class="feat-title">Team Building</div><div class="feat-desc">Corporate hiking experiences designed to strengthen teams and boost workplace culture.</div></div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div id="signup" class="page">
+  <div class="auth-card">
+    <span class="back-link" onclick="showPage('landing')">← Back to home</span>
+    <div class="auth-logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img-auth"></div>
+    <p class="auth-sub">Join thousands of adventurers exploring Zambia</p>
+    <div class="error-msg" id="signup-error"></div>
+    <div class="form-group"><label class="form-label">Full Name</label><input type="text" id="signup-name" class="form-input" placeholder="Your full name"></div>
+    <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="signup-email" class="form-input" placeholder="you@example.com"></div>
+    <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" id="signup-phone" class="form-input" placeholder="+260 770 000 000"></div>
+    <div class="form-group"><label class="form-label">Password</label><input type="password" id="signup-pass" class="form-input" placeholder="Create a strong password"></div>
+    <button class="btn-full" onclick="handleSignup()">Create My Account</button>
+    <p class="auth-switch">Already have an account? <a onclick="showPage('login')">Sign in here</a></p>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="page">
+  <div class="auth-card">
+    <span class="back-link" onclick="showPage('landing')">← Back to home</span>
+    <div class="auth-logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img-auth"></div>
+    <h2 class="auth-title">Welcome Back</h2>
+    <p class="auth-sub">Sign in to book your next adventure</p>
+    <div class="error-msg" id="login-error"></div>
+    <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="login-email" class="form-input" placeholder="you@example.com"></div>
+    <div class="form-group"><label class="form-label">Password</label><input type="password" id="login-pass" class="form-input" placeholder="Your password"></div>
+    <button class="btn-full" onclick="handleLogin()">Sign In</button>
+    <p class="auth-switch">New to EcoTrek? <a onclick="showPage('signup')">Sign up free</a></p>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="app" class="page">
+  <nav class="dash-nav">
+    <div class="logo"><img src="logo.jpeg" alt="Let's Go Hiking Zambia" class="logo-img"></div>
+    <div class="dash-nav-center">
+      <button class="nav-tab active" id="tab-adventures" onclick="switchAppPage('adventures')"><span class="tab-dot"></span>🥾 Adventures</button>
+      <button class="nav-tab" id="tab-bookings" onclick="switchAppPage('bookings')"><span class="tab-dot"></span>📋 My Bookings</button>
+      <button class="nav-tab" id="tab-profile" onclick="switchAppPage('profile')"><span class="tab-dot"></span>👤 Profile</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="dash-user"><div class="dash-avatar" id="user-avatar">A</div><span class="dash-username">Hi, <span id="user-display-name">Explorer</span></span></div>
+      <button class="btn-logout" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="app-page active" id="page-adventures">
+    <div class="adv-page-label">🌿 Upcoming Expeditions</div>
+    <h2 class="adv-page-title">Choose Your Next <span class="gold">Adventure</span></h2>
+    <p class="adv-page-sub">Select one or more trails, then proceed to secure payment. All deposits support trail conservation.</p>
+    <div class="adventures-grid" id="adventures-grid"></div>
+  </div>
+
+  <div class="app-page" id="page-bookings">
+    <div class="adv-page-label">📋 Booking History</div>
+    <h2 class="adv-page-title">My <span class="gold">Bookings</span></h2>
+    <p class="adv-page-sub">All your confirmed adventures in one place.</p>
+    <div id="bookings-list"></div>
+  </div>
+
+  <div class="app-page" id="page-profile">
+    <div class="adv-page-label">👤 Your Account</div>
+    <h2 class="adv-page-title">My <span class="gold">Profile</span></h2>
+    <div class="profile-card">
+      <div class="profile-avatar-big" id="profile-avatar-big">A</div>
+      <div class="profile-name" id="profile-name">–</div>
+      <div class="profile-email-text" id="profile-email-display">–</div>
+      <div class="profile-field"><span class="profile-field-label">Phone</span><span class="profile-field-val" id="profile-phone">–</span></div>
+      <div class="profile-field"><span class="profile-field-label">Member Since</span><span class="profile-field-val" id="profile-since">–</span></div>
+      <div class="profile-field"><span class="profile-field-label">Total Bookings</span><span class="profile-field-val" id="profile-total-bookings">0</span></div>
+    </div>
+    <button class="btn-logout" style="font-size:14px;padding:10px 24px;" onclick="handleLogout()">Sign Out of Account</button>
+  </div>
+</div>
+
+<!-- BOOKING BAR -->
+<div class="booking-bar" id="booking-bar">
+  <div class="booking-bar-left">
+    <div class="booking-count" id="booking-count">0</div>
+    <div class="booking-info"><div>Adventures selected</div><div class="booking-sublabel" id="booking-adventure-names">None yet</div></div>
+  </div>
+  <div><div class="booking-total" id="booking-total">ZMW 0</div><div class="booking-sublabel">Total</div></div>
+  <button class="btn-book-now" onclick="openPaymentModal()">Proceed to Payment →</button>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Secure Payment</h3>
+      <button class="modal-close" onclick="closePaymentModal()">✕</button>
+    </div>
+    <div class="order-summary">
+      <div class="order-summary-title">📋 Order Summary</div>
+      <div id="order-items"></div>
+      <div class="order-total"><span>Total Due</span><span class="order-total-amount" id="modal-total">ZMW 0</span></div>
+    </div>
+    <div class="payment-section-title">Payment Method</div>
+    <div class="payment-methods">
+      <div class="payment-method active" onclick="selectPaymentMethod(this,'card')"><div class="pm-icon">💳</div>Card</div>
+      <div class="payment-method" onclick="selectPaymentMethod(this,'mobile')"><div class="pm-icon">📱</div>Mobile Money</div>
+      <div class="payment-method" onclick="selectPaymentMethod(this,'bank')"><div class="pm-icon">🏦</div>Bank Transfer</div>
+    </div>
+    <div id="payment-fields-card">
+      <div class="payment-section-title">Card Details</div>
+      <div class="form-group card-number-field">
+        <label class="form-label">Card Number</label>
+        <input type="text" class="form-input" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)">
+        <div class="card-icons">💳</div>
+      </div>
+      <div class="form-group"><label class="form-label">Cardholder Name</label><input type="text" class="form-input" id="card-name" placeholder="Name as on card"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Expiry</label><input type="text" class="form-input" id="card-expiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)"></div>
+        <div class="form-group"><label class="form-label">CVV</label><input type="text" class="form-input" id="card-cvv" placeholder="123" maxlength="3"></div>
+      </div>
+    </div>
+    <div id="payment-fields-mobile" style="display:none">
+      <div class="payment-section-title">Mobile Money</div>
+      <div class="form-group"><label class="form-label">Mobile Number</label><input type="tel" class="form-input" id="mobile-number" placeholder="+260 970 000 000"></div>
+      <div class="form-group"><label class="form-label">Provider</label>
+        <select class="form-input" id="mobile-provider" style="cursor:pointer;"><option value="">Select provider</option><option>MTN Mobile Money</option><option>Airtel Money</option><option>Zamtel Kwacha</option></select>
+      </div>
+    </div>
+    <div id="payment-fields-bank" style="display:none">
+      <div class="payment-section-title">Bank Transfer Details</div>
+      <div class="order-summary">
+        <div class="order-item"><span>Bank Name</span><strong>Stanbic Bank Zambia</strong></div>
+        <div class="order-item"><span>Account Name</span><strong>EcoTrek Adventures</strong></div>
+        <div class="order-item"><span>Account Number</span><strong>0140255819800</strong></div>
+        <div class="order-item"><span>Branch Code</span><strong>02</strong></div>
+      </div>
+      <div class="form-group"><label class="form-label">Your Reference / Transaction ID</label><input type="text" class="form-input" id="bank-ref" placeholder="Enter transaction reference"></div>
+    </div>
+    <button class="btn-full" id="pay-btn" onclick="processPayment()">Pay Now</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="success-overlay">
+  <div id="confetti-wrapper" style="position:fixed;top:0;left:0;right:0;pointer-events:none;z-index:700;"></div>
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    <h2 class="success-title">Booking Confirmed!</h2>
+    <p class="success-sub">Your adventure is booked. A confirmation email has been sent to <strong id="confirm-email-display" style="color:var(--leaf)"></strong></p>
+    <div class="success-email-preview">
+      <div class="email-label">📧 Email Confirmation Sent</div>
+      <div class="email-row"><span>To</span><strong id="confirm-to"></strong></div>
+      <div class="email-row"><span>Booking Ref</span><strong id="confirm-ref" style="color:var(--gold);font-family:'Space Mono',monospace"></strong></div>
+      <div class="email-row"><span>Adventures</span><strong id="confirm-adventures"></strong></div>
+      <div class="email-row"><span>Amount Paid</span><strong id="confirm-amount" style="color:var(--gold)"></strong></div>
+      <div class="email-row"><span>Contact</span><strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="573234382325323c2d3a17303a363e3b7934383a">[email&#160;protected]</a></strong></div>
+    </div>
+    <button class="btn-full" onclick="closeSuccess()">Back to Adventures</button>
+  </div>
+</div>
+
+<!-- ADMIN PORTAL -->
+<div id="admin" class="page">
+  <nav class="admin-nav">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="logo"><img src="logo.jpeg" alt="EcoTrek" class="logo-img"></div>
+      <div class="admin-badge">🔐 Admin Portal</div>
+    </div>
+    <div class="admin-nav-tabs">
+      <button class="nav-tab active" id="admin-tab-adventures" onclick="switchAdminPage('adventures')"><span class="tab-dot"></span>🥾 Adventures</button>
+      <button class="nav-tab" id="admin-tab-photos" onclick="switchAdminPage('photos')"><span class="tab-dot"></span>📷 Past Hike Photos</button>
+    </div>
+    <button class="btn-logout" onclick="handleLogout()">Sign Out</button>
+  </nav>
+
+  <!-- Adventures Management -->
+  <div class="admin-body" id="admin-page-adventures">
+    <div class="adv-page-label">⚙️ Manage Content</div>
+    <h2 class="admin-section-title">Adventures <span style="color:var(--gold)">Manager</span></h2>
+    <p class="admin-section-sub">Add new adventures or remove existing ones. Changes are saved locally and reflected immediately.</p>
+
+    <div class="admin-success-toast" id="adv-toast">✅ Adventure saved successfully!</div>
+
+    <!-- Add New Adventure -->
+    <div class="admin-card">
+      <div class="admin-card-title">➕ Add New Adventure</div>
+      <div class="admin-form-grid">
+        <div class="form-group span2"><label class="form-label">Adventure Title *</label><input type="text" id="adv-title" class="form-input" placeholder="e.g. Blue Lagoon Sunrise Trek"></div>
+        <div class="form-group span2"><label class="form-label">Description *</label><textarea id="adv-desc" class="form-input" rows="3" placeholder="Describe the adventure experience..." style="resize:vertical;"></textarea></div>
+        <div class="form-group"><label class="form-label">Location *</label><input type="text" id="adv-location" class="form-input" placeholder="e.g. Blue Lagoon, Western Province"></div>
+        <div class="form-group"><label class="form-label">Date *</label><input type="text" id="adv-date" class="form-input" placeholder="e.g. Saturday, 12 July 2025"></div>
+        <div class="form-group"><label class="form-label">Duration</label><input type="text" id="adv-duration" class="form-input" placeholder="e.g. 6 hours"></div>
+        <div class="form-group"><label class="form-label">Distance</label><input type="text" id="adv-distance" class="form-input" placeholder="e.g. 14 km"></div>
+        <div class="form-group"><label class="form-label">Difficulty</label>
+          <select id="adv-difficulty" class="form-input" style="cursor:pointer;">
+            <option value="easy">Easy – Beginner Friendly</option>
+            <option value="moderate">Moderate – Moderate Challenge</option>
+            <option value="hard">Hard – Advanced Trek</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Spots Remaining</label><input type="number" id="adv-spots" class="form-input" placeholder="12" min="1"></div>
+        <div class="form-group"><label class="form-label">Price (ZMW) *</label><input type="number" id="adv-price" class="form-input" placeholder="550" min="0"></div>
+        <div class="form-group"><label class="form-label">Transport Fee (ZMW)</label><input type="number" id="adv-transport" class="form-input" placeholder="100" min="0"></div>
+        <div class="form-group span2">
+          <label class="form-label">Card Colour Theme</label>
+          <div class="admin-color-row">
+            <input type="color" id="adv-color-sky" class="admin-color-input" value="#081420" title="Sky colour">
+            <span class="admin-color-label">Sky</span>
+            <input type="color" id="adv-color-bg" class="admin-color-input" value="#0d2218" title="Background colour">
+            <span class="admin-color-label">Background</span>
+            <input type="color" id="adv-color-accent" class="admin-color-input" value="#6db87a" title="Accent colour">
+            <span class="admin-color-label">Accent</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <button class="btn-admin-save" onclick="adminAddAdventure()">💾 Save Adventure</button>
+      </div>
+    </div>
+
+    <!-- Existing Adventures -->
+    <div class="admin-card">
+      <div class="admin-card-title">📋 Current Adventures</div>
+      <div class="admin-adv-list" id="admin-adv-list"></div>
+    </div>
+  </div>
+
+  <!-- Photos Management -->
+  <div class="admin-body" id="admin-page-photos" style="display:none;">
+    <div class="adv-page-label">📸 Media Library</div>
+    <h2 class="admin-section-title">Past Hike <span style="color:var(--gold)">Photos</span></h2>
+    <p class="admin-section-sub">Add photos to the landing page carousel. Each photo appears as a slide with a tag, title, and caption.</p>
+
+    <div class="admin-success-toast" id="photo-toast">✅ Photo added to carousel!</div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">🖼️ Carousel Slides</div>
+      <div class="admin-photo-grid" id="admin-photo-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Meta Edit Modal -->
+<div class="admin-meta-modal" id="admin-meta-modal">
+  <div class="admin-meta-card">
+    <h3>✏️ Edit Slide Details</h3>
+    <input type="hidden" id="edit-slide-idx">
+    <div class="form-group"><label class="form-label">Tag / Label</label><input type="text" id="edit-tag" class="form-input" placeholder="e.g. 🌿 Kafue Hills · March 2026"></div>
+    <div class="form-group"><label class="form-label">Title (shown in carousel)</label><input type="text" id="edit-title" class="form-input" placeholder="e.g. Zambia's green heart, as far as the eye can see"></div>
+    <div class="form-group"><label class="form-label">Subtitle</label><input type="text" id="edit-sub" class="form-input" placeholder="e.g. The view that makes every step worth it."></div>
+    <div style="display:flex;gap:12px;margin-top:24px;">
+      <button class="btn-admin-save" onclick="saveSlideMeta()">💾 Save Changes</button>
+      <button class="btn-admin-danger" onclick="closeMetaModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  emailjs.init('6dSo-GIMrzK3QUKff');
+
+  var users = JSON.parse(localStorage.getItem('ecotrek_users') || '[]');
+  var currentUser = JSON.parse(sessionStorage.getItem('ecotrek_user') || 'null');
+  var selectedAdventures = [];
+  var activePaymentMethod = 'card';
+  var bookingHistory = JSON.parse(localStorage.getItem('ecotrek_bookings') || '[]');
+
+  var ADVENTURES = [
+    {id:1,title:'Lusaka Hills Sunrise Hike',location:'Lusaka Hills, Zambia',date:'Saturday, 22 March 2025',duration:'6 hours',distance:'12 km',difficulty:'easy',diffLabel:'Beginner Friendly',price:350,transportFee:80,spots:12,desc:'Greet the African sunrise from the top of the Lusaka Hills. Gentle slopes, wildlife sightings, and a guided breakfast at the summit.',theme:{bg:'#1a3a2a',accent:'#6db87a',sky:'#0d2218'}},
+    {id:2,title:'Kafue Gorge Trek',location:'Kafue Gorge, Southern Province',date:'Saturday, 5 April 2025',duration:'Full Day',distance:'18 km',difficulty:'moderate',diffLabel:'Moderate Challenge',price:550,transportFee:120,spots:8,desc:'Navigate dramatic gorge terrain alongside the powerful Kafue River. Stunning cliff views, river crossings, and rare birdlife throughout.',theme:{bg:'#2a2a0d',accent:'#d4a843',sky:'#1a1a08'}},
+    {id:3,title:'Mutinondo Wilderness Expedition',location:'Mutinondo Wilderness, Muchinga',date:'Friday–Sunday, 18–20 April 2025',duration:'3 Days',distance:'35 km',difficulty:'hard',diffLabel:'Advanced Trek',price:1800,transportFee:250,spots:6,desc:'A three-day wilderness immersion through one of Zambia\'s most pristine and remote highland areas. Camping under the stars included.',theme:{bg:'#0d1f2a',accent:'#5a9cb8',sky:'#081420'}}
+  ];
+
+  // Expose to global
+  window.showPage = showPage;
+  window.switchAppPage = switchAppPage;
+  window.handleSignup = handleSignup;
+  window.handleLogin = handleLogin;
+  window.handleLogout = handleLogout;
+  window.toggleAdventure = toggleAdventure;
+  window.openPaymentModal = openPaymentModal;
+  window.closePaymentModal = closePaymentModal;
+  window.selectPaymentMethod = selectPaymentMethod;
+  window.formatCardNumber = formatCardNumber;
+  window.formatExpiry = formatExpiry;
+  window.processPayment = processPayment;
+  window.closeSuccess = closeSuccess;
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(function(p) {
+      p.classList.remove('active');
+      p.style.display = '';
+    });
+    var pg = document.getElementById(id);
+    if (!pg) return;
+    pg.classList.add('active');
+    if (id === 'signup' || id === 'login') {
+      pg.style.display = 'flex';
+    }
+    if (id === 'app') {
+      if (!currentUser) { showPage('login'); return; }
+      if (currentUser.isAdmin) { showPage('admin'); return; }
+      pg.style.display = 'flex';
+      renderUserInfo();
+      renderAdventures();
+      switchAppPage('adventures');
+    }
+    if (id === 'admin') {
+      if (!currentUser || !currentUser.isAdmin) { showPage('login'); return; }
+      pg.style.display = 'flex';
+      switchAdminPage('adventures');
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function switchAppPage(name) {
+    document.querySelectorAll('.app-page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+    var pg = document.getElementById('page-' + name);
+    var tab = document.getElementById('tab-' + name);
+    if (pg) pg.classList.add('active');
+    if (tab) tab.classList.add('active');
+    if (name === 'bookings') renderBookings();
+    if (name === 'profile') renderProfile();
+    window.scrollTo(0, 0);
+  }
+
+  function handleSignup() {
+    var name = document.getElementById('signup-name').value.trim();
+    var email = document.getElementById('signup-email').value.trim();
+    var phone = document.getElementById('signup-phone').value.trim();
+    var pass = document.getElementById('signup-pass').value;
+    var err = document.getElementById('signup-error');
+    if (!name || !email || !pass) { showErr(err, 'Please fill in all required fields.'); return; }
+    if (email.indexOf('@') < 0) { showErr(err, 'Please enter a valid email address.'); return; }
+    if (pass.length < 6) { showErr(err, 'Password must be at least 6 characters.'); return; }
+    if (users.some(function(u) { return u.email === email; })) { showErr(err, 'An account with this email already exists.'); return; }
+    var joined = new Date().toLocaleDateString('en-GB', {year:'numeric', month:'long'});
+    currentUser = {name:name, email:email, phone:phone, pass:pass, joinedDate:joined};
+    users.push(currentUser);
+    localStorage.setItem('ecotrek_users', JSON.stringify(users));
+    sessionStorage.setItem('ecotrek_user', JSON.stringify(currentUser));
+    err.style.display = 'none';
+    showPage('app');
+  }
+
+  function handleLogin() {
+    var email = document.getElementById('login-email').value.trim();
+    var pass = document.getElementById('login-pass').value;
+    var err = document.getElementById('login-error');
+    if (email === 'admin@ecotrek.zm' && pass === 'admin2024') {
+      currentUser = {name:'Admin', email:'admin@ecotrek.zm', isAdmin:true};
+      sessionStorage.setItem('ecotrek_user', JSON.stringify(currentUser));
+      showPage('admin'); return;
+    }
+    if (email === 'demo@ecotrek.zm' && pass === 'demo123') {
+      currentUser = {name:'Demo Explorer', email:'demo@ecotrek.zm', phone:'+260 770 800 533', joinedDate:'March 2025'};
+      sessionStorage.setItem('ecotrek_user', JSON.stringify(currentUser));
+      showPage('app'); return;
+    }
+    var found = null;
+    for (var i = 0; i < users.length; i++) {
+      if (users[i].email === email && users[i].pass === pass) { found = users[i]; break; }
+    }
+    if (!found) { showErr(err, 'Incorrect email or password. Try demo@ecotrek.zm / demo123'); return; }
+    currentUser = found;
+    sessionStorage.setItem('ecotrek_user', JSON.stringify(currentUser));
+    err.style.display = 'none';
+    showPage('app');
+  }
+
+  function handleLogout() {
+    currentUser = null;
+    sessionStorage.removeItem('ecotrek_user');
+    selectedAdventures = [];
+    document.getElementById('booking-bar').classList.remove('visible');
+    showPage('landing');
+  }
+
+  function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+
+  function renderUserInfo() {
+    var first = currentUser.name.split(' ')[0];
+    document.getElementById('user-display-name').textContent = first;
+    document.getElementById('user-avatar').textContent = first[0].toUpperCase();
+  }
+
+  function renderAdventures() {
+    var grid = document.getElementById('adventures-grid');
+    grid.innerHTML = '';
+    for (var i = 0; i < ADVENTURES.length; i++) {
+      var adv = ADVENTURES[i];
+      var sel = selectedAdventures.find(function(a) { return a.id === adv.id; });
+      var hasTransport = sel ? sel.transport : false;
+      var displayPrice = adv.price + (hasTransport ? adv.transportFee : 0);
+
+      var card = document.createElement('div');
+      card.className = 'adventure-card' + (sel ? ' selected' : '');
+      card.id = 'card-' + adv.id;
+
+      card.innerHTML =
+        '<div class="card-image" style="background:linear-gradient(160deg,' + adv.theme.sky + ',' + adv.theme.bg + ')">' +
+          '<svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg">' +
+            '<defs><linearGradient id="sg' + adv.id + '" x1="0%" y1="0%" x2="0%" y2="100%">' +
+              '<stop offset="0%" style="stop-color:' + adv.theme.sky + '"/>' +
+              '<stop offset="100%" style="stop-color:' + adv.theme.bg + '"/>' +
+            '</linearGradient></defs>' +
+            '<rect width="400" height="180" fill="url(#sg' + adv.id + ')"/>' +
+            '<polygon points="0,180 60,80 120,130 200,50 280,110 360,60 400,100 400,180" fill="' + adv.theme.bg + '" opacity="0.8"/>' +
+            '<polygon points="0,180 80,110 160,150 240,90 320,140 400,100 400,180" fill="' + adv.theme.accent + '" opacity="0.15"/>' +
+            '<circle cx="320" cy="50" r="22" fill="' + adv.theme.accent + '" opacity="0.7"/>' +
+            '<circle cx="40" cy="30" r="1.5" fill="#faf7f2" opacity="0.6"/>' +
+            '<circle cx="150" cy="25" r="1" fill="#faf7f2" opacity="0.8"/>' +
+            '<circle cx="250" cy="40" r="1.2" fill="#faf7f2" opacity="0.5"/>' +
+          '</svg>' +
+          '<div class="card-badge" id="badge-' + adv.id + '">ZMW ' + displayPrice.toLocaleString() + '</div>' +
+          '<div class="selected-check">✓</div>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-difficulty diff-' + adv.difficulty + '">⬥ ' + adv.diffLabel + '</div>' +
+          '<h3 class="card-title">' + adv.title + '</h3>' +
+          '<p class="card-desc">' + adv.desc + '</p>' +
+          '<div class="card-meta">' +
+            '<div class="meta-row"><span>📅</span> ' + adv.date + '</div>' +
+            '<div class="meta-row"><span>📍</span> ' + adv.location + '</div>' +
+            '<div class="meta-row"><span>⏱</span> ' + adv.duration + ' · ' + adv.distance + '</div>' +
+            '<div class="meta-row"><span>👥</span> ' + adv.spots + ' spots remaining</div>' +
+          '</div>' +
+        '</div>' +
+        /* Transport toggle — outside card-body click zone */
+        '<div class="transport-row" id="transport-row-' + adv.id + '">' +
+          '<div class="transport-left">' +
+            '<span class="transport-icon">🚐</span>' +
+            '<div>' +
+              '<div class="transport-label">Need transport?</div>' +
+              '<div class="transport-fee">+ ZMW ' + adv.transportFee + ' per person</div>' +
+            '</div>' +
+          '</div>' +
+          '<label class="transport-toggle">' +
+            '<input type="checkbox" id="transport-' + adv.id + '"' + (hasTransport ? ' checked' : '') + '>' +
+            '<span class="toggle-track"></span>' +
+          '</label>' +
+        '</div>' +
+        '<div style="padding:0 22px 20px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(109,184,122,.1);padding-top:16px;">' +
+          '<div class="card-price-wrap">' +
+            '<div class="card-price" id="price-' + adv.id + '">ZMW ' + displayPrice.toLocaleString() + ' <span>/ person</span></div>' +
+            '<div class="card-price-total" id="price-note-' + adv.id + '">' + (hasTransport ? '🚐 Includes transport' : 'Transport not included') + '</div>' +
+          '</div>' +
+          '<button class="btn-select" id="btn-select-' + adv.id + '">' + (sel ? '✓ Selected' : 'Select') + '</button>' +
+        '</div>';
+
+      grid.appendChild(card);
+
+      // Wire up SELECT button (not the whole card, to avoid conflict with toggle)
+      (function(advId) {
+        document.getElementById('btn-select-' + advId).addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleAdventure(advId);
+        });
+        // Wire transport toggle
+        document.getElementById('transport-' + advId).addEventListener('change', function(e) {
+          e.stopPropagation();
+          updateTransport(advId, this.checked);
+        });
+        // Stop transport row from triggering card click
+        document.getElementById('transport-row-' + advId).addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      })(adv.id);
+    }
+  }
+
+  function updateTransport(id, wantsTransport) {
+    var adv = ADVENTURES.find(function(a) { return a.id === id; });
+    var total = adv.price + (wantsTransport ? adv.transportFee : 0);
+
+    // Update card display
+    document.getElementById('price-' + id).innerHTML = 'ZMW ' + total.toLocaleString() + ' <span>/ person</span>';
+    document.getElementById('price-note-' + id).textContent = wantsTransport ? '🚐 Includes transport' : 'Transport not included';
+    document.getElementById('badge-' + id).textContent = 'ZMW ' + total.toLocaleString();
+
+    // Update in selectedAdventures if already selected
+    var sel = selectedAdventures.find(function(a) { return a.id === id; });
+    if (sel) {
+      sel.transport = wantsTransport;
+      sel.price = total;
+      sel.basePrice = adv.price;
+      updateBookingBar();
+    }
+  }
+
+  function toggleAdventure(id) {
+    var idx = selectedAdventures.findIndex(function(a) { return a.id === id; });
+    var card = document.getElementById('card-' + id);
+    var btn = document.getElementById('btn-select-' + id);
+
+    if (idx > -1) {
+      selectedAdventures.splice(idx, 1);
+      card.classList.remove('selected');
+      btn.textContent = 'Select';
+    } else {
+      var adv = ADVENTURES.find(function(a) { return a.id === id; });
+      var wantsTransport = document.getElementById('transport-' + id).checked;
+      var finalPrice = adv.price + (wantsTransport ? adv.transportFee : 0);
+      selectedAdventures.push({ id: adv.id, title: adv.title, price: finalPrice, basePrice: adv.price, transport: wantsTransport, transportFee: adv.transportFee });
+      card.classList.add('selected');
+      btn.textContent = '✓ Selected';
+    }
+    updateBookingBar();
+  }
+
+  function updateBookingBar() {
+    var bar = document.getElementById('booking-bar');
+    var count = selectedAdventures.length;
+    var total = 0;
+    for (var i = 0; i < selectedAdventures.length; i++) total += selectedAdventures[i].price;
+    document.getElementById('booking-count').textContent = count;
+    document.getElementById('booking-total').textContent = 'ZMW ' + total.toLocaleString();
+    var names = [];
+    for (var j = 0; j < selectedAdventures.length; j++) {
+      names.push(selectedAdventures[j].title.split(' ').slice(0,2).join(' ') + (selectedAdventures[j].transport ? ' 🚐' : ''));
+    }
+    document.getElementById('booking-adventure-names').textContent = count > 0 ? names.join(', ') : 'None yet';
+    if (count > 0) bar.classList.add('visible');
+    else bar.classList.remove('visible');
+  }
+
+  function renderBookings() {
+    var mine = bookingHistory.filter(function(b) { return b.userEmail === currentUser.email; });
+    var el = document.getElementById('bookings-list');
+    if (mine.length === 0) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-icon">🥾</div><h3>No bookings yet</h3><p>You haven\'t booked any adventures yet.</p><button class="btn-solid" onclick="switchAppPage(\'adventures\')" style="font-size:15px;padding:12px 28px;border-radius:50px;cursor:pointer;">Browse Adventures</button></div>';
+      return;
+    }
+    var html = '<div class="booking-history-list">';
+    var rev = mine.slice().reverse();
+    for (var i = 0; i < rev.length; i++) {
+      var b = rev[i];
+      html += '<div class="booking-history-item"><div class="bhi-left"><div class="bhi-ref">' + b.ref + '</div><div class="bhi-name">' + b.adventures + '</div><div class="bhi-meta">📅 Booked ' + b.date + '</div></div><div style="text-align:right"><div class="bhi-amount">ZMW ' + Number(b.amount).toLocaleString() + '</div><span class="bhi-status">✓ Confirmed</span></div></div>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
+  }
+
+  function renderProfile() {
+    var mine = bookingHistory.filter(function(b) { return b.userEmail === currentUser.email; });
+    document.getElementById('profile-avatar-big').textContent = currentUser.name[0].toUpperCase();
+    document.getElementById('profile-name').textContent = currentUser.name;
+    document.getElementById('profile-email-display').textContent = currentUser.email;
+    document.getElementById('profile-phone').textContent = currentUser.phone || 'Not provided';
+    document.getElementById('profile-since').textContent = currentUser.joinedDate || 'Recently';
+    document.getElementById('profile-total-bookings').textContent = mine.length + ' adventure' + (mine.length !== 1 ? 's' : '');
+  }
+
+  function openPaymentModal() {
+    if (selectedAdventures.length === 0) return;
+    var total = 0;
+    var html = '';
+    for (var i = 0; i < selectedAdventures.length; i++) {
+      var a = selectedAdventures[i];
+      total += a.price;
+      html += '<div class="order-item"><span class="order-item-name">🥾 ' + a.title + '</span><span class="order-item-price">ZMW ' + a.basePrice.toLocaleString() + '</span></div>';
+      if (a.transport) {
+        html += '<div class="order-item" style="padding-left:16px;opacity:.8"><span class="order-item-name">🚐 Transport</span><span class="order-item-price">ZMW ' + a.transportFee.toLocaleString() + '</span></div>';
+      }
+    }
+    document.getElementById('order-items').innerHTML = html;
+    document.getElementById('modal-total').textContent = 'ZMW ' + total.toLocaleString();
+    document.getElementById('payment-modal').classList.add('open');
+  }
+
+  function closePaymentModal() {
+    document.getElementById('payment-modal').classList.remove('open');
+  }
+
+  function selectPaymentMethod(el, method) {
+    document.querySelectorAll('.payment-method').forEach(function(m) { m.classList.remove('active'); });
+    el.classList.add('active');
+    activePaymentMethod = method;
+    document.getElementById('payment-fields-card').style.display = method === 'card' ? 'block' : 'none';
+    document.getElementById('payment-fields-mobile').style.display = method === 'mobile' ? 'block' : 'none';
+    document.getElementById('payment-fields-bank').style.display = method === 'bank' ? 'block' : 'none';
+  }
+
+  function formatCardNumber(input) {
+    var v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  function formatExpiry(input) {
+    var v = input.value.replace(/\D/g, '');
+    if (v.length >= 2) v = v.substring(0, 2) + ' / ' + v.substring(2);
+    input.value = v;
+  }
+
+  function processPayment() {
+    var btn = document.getElementById('pay-btn');
+    if (activePaymentMethod === 'card') {
+      var num = document.getElementById('card-number').value.replace(/\s/g, '');
+      var cname = document.getElementById('card-name').value.trim();
+      var exp = document.getElementById('card-expiry').value.trim();
+      var cvv = document.getElementById('card-cvv').value.trim();
+      if (!num || num.length < 16 || !cname || !exp || !cvv) { alert('Please fill in all card details.'); return; }
+    } else if (activePaymentMethod === 'mobile') {
+      var mnum = document.getElementById('mobile-number').value.trim();
+      var prov = document.getElementById('mobile-provider').value;
+      if (!mnum || !prov) { alert('Please fill in mobile money details.'); return; }
+    } else {
+      var bref = document.getElementById('bank-ref').value.trim();
+      if (!bref) { alert('Please enter your bank transfer reference.'); return; }
+    }
+    btn.innerHTML = '<span class="spinner"></span> Processing...';
+    btn.disabled = true;
+    setTimeout(function() {
+      btn.innerHTML = 'Pay Now';
+      btn.disabled = false;
+      closePaymentModal();
+      showSuccess();
+    }, 2200);
+  }
+
+  function showSuccess() {
+    var total = 0;
+    var nameArr = [];
+    for (var i = 0; i < selectedAdventures.length; i++) {
+      total += selectedAdventures[i].price;
+      nameArr.push(selectedAdventures[i].title + (selectedAdventures[i].transport ? ' (+ Transport)' : ''));
+    }
+    var ref = 'ECT-' + Date.now().toString().slice(-7);
+    var names = nameArr.join(', ');
+    var dateStr = new Date().toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+
+    bookingHistory.push({ref:ref, userEmail:currentUser.email, adventures:names, amount:total, date:dateStr});
+    localStorage.setItem('ecotrek_bookings', JSON.stringify(bookingHistory));
+
+    document.getElementById('confirm-email-display').textContent = currentUser.email;
+    document.getElementById('confirm-to').textContent = currentUser.name + ' <' + currentUser.email + '>';
+    document.getElementById('confirm-ref').textContent = ref;
+    document.getElementById('confirm-adventures').textContent = names;
+    document.getElementById('confirm-amount').textContent = 'ZMW ' + total.toLocaleString();
+    document.getElementById('success-overlay').classList.add('open');
+    spawnConfetti();
+
+    emailjs.send('service_lrjn94h', 'template_qbp63ir', {
+      to_name: currentUser.name,
+      to_email: currentUser.email,
+      booking_ref: ref,
+      adventures: names,
+      amount: 'ZMW ' + total.toLocaleString(),
+      date: dateStr,
+      phone: currentUser.phone || 'N/A',
+      reply_to: 'ecotrekzm@gmail.com'
+    }).then(function() {
+      console.log('Email sent to ' + currentUser.email);
+    }).catch(function(e) {
+      console.error('EmailJS error:', e);
+    });
+  }
+
+  function closeSuccess() {
+    document.getElementById('success-overlay').classList.remove('open');
+    selectedAdventures = [];
+    updateBookingBar();
+    renderAdventures();
+  }
+
+  function spawnConfetti() {
+    var wrapper = document.getElementById('confetti-wrapper');
+    wrapper.innerHTML = '';
+    var colors = ['#d4a843','#6db87a','#faf7f2','#e8c06a','#4a7c59'];
+    for (var i = 0; i < 60; i++) {
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      var size = (Math.random() * 10 + 4).toFixed(1);
+      var dur = (Math.random() * 2 + 1.5).toFixed(2);
+      var delay = (Math.random() * 1.5).toFixed(2);
+      var left = (Math.random() * 100).toFixed(1);
+      var drift = ((Math.random() - 0.5) * 200).toFixed(0);
+      var rot = Math.floor(Math.random() * 720);
+      var st = document.createElement('style');
+      st.textContent = '@keyframes cf' + i + '{to{top:110vh;transform:translateX(' + drift + 'px) rotate(' + rot + 'deg);opacity:0;}}';
+      document.head.appendChild(st);
+      var p = document.createElement('div');
+      p.style.cssText = 'position:fixed;top:-20px;left:' + left + 'vw;width:' + size + 'px;height:' + (size*0.6).toFixed(1) + 'px;background:' + color + ';border-radius:' + (Math.random()>0.5?'50%':'2px') + ';opacity:0.85;animation:cf' + i + ' ' + dur + 's linear ' + delay + 's forwards;pointer-events:none;z-index:700;';
+      wrapper.appendChild(p);
+    }
+    setTimeout(function() { wrapper.innerHTML = ''; }, 5000);
+  }
+
+  // CAROUSEL
+  var carouselIndex = 0;
+  var carouselTotal = 6;
+  var carouselTimer = null;
+  var slideData = [
+    {tag:'🌿 Kafue Hills · March 2026', title:'Zambia\'s green heart,<br>as far as the eye can see', sub:'The view that makes every step worth it.'},
+    {tag:'🥾 Community Hikes · Feb 2026', title:'Good vibes only<br>on this trail', sub:'Weekly group hikes open to all fitness levels.'},
+    {tag:'⛰️ Forest 27 · March 2025', title:'Made it to the<br>Mountain of God', sub:'Every summit tells a story worth telling.'},
+    {tag:'😅 Trail Life · Kafue Hills 2026', title:'Rest stops hit different<br>in the bush', sub:'Real people, real trails, real memories.'},
+    {tag:'👟 Squad Goals · Kafue Hills 2026', title:'Every great hike starts<br>with the right crew', sub:'Lace up and show up — that\'s all it takes.'},
+    {tag:'🚢 Hike & Cruise · Kafue Hills 2026', title:'Hike done. Cruise next.<br>Best day ever.', sub:'Because some adventures end on the water.'}
+  ];
+
+  function carouselInit() {
+    var dotsEl = document.getElementById('carousel-dots');
+    if (!dotsEl) return;
+    dotsEl.innerHTML = '';
+    for (var i = 0; i < carouselTotal; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      (function(idx){ dot.addEventListener('click', function(){ carouselGoTo(idx); }); })(i);
+      dotsEl.appendChild(dot);
+    }
+    carouselAutoPlay();
+  }
+
+  window.carouselMove = function(dir) {
+    carouselGoTo((carouselIndex + dir + carouselTotal) % carouselTotal);
+  };
+
+  window.carouselGoTo = function(idx) {
+    carouselIndex = idx;
+    var track = document.getElementById('carousel-track');
+    if (track) track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    document.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+      d.className = 'carousel-dot' + (i === idx ? ' active' : '');
+    });
+    // Update text
+    var labelEl = document.getElementById('hero-slide-label');
+    var titleEl = document.getElementById('hero-main-title');
+    var subEl = document.getElementById('hero-sub');
+    if (labelEl && titleEl && subEl) {
+      labelEl.style.opacity = '0'; titleEl.style.opacity = '0'; subEl.style.opacity = '0';
+      setTimeout(function() {
+        labelEl.textContent = slideData[idx].tag;
+        titleEl.innerHTML = slideData[idx].title;
+        subEl.textContent = slideData[idx].sub;
+        labelEl.style.transition = 'opacity .5s'; titleEl.style.transition = 'opacity .5s'; subEl.style.transition = 'opacity .5s';
+        labelEl.style.opacity = '1'; titleEl.style.opacity = '1'; subEl.style.opacity = '1';
+      }, 300);
+    }
+    clearInterval(carouselTimer);
+    carouselAutoPlay();
+  };
+
+  function carouselAutoPlay() {
+    carouselTimer = setInterval(function() {
+      carouselGoTo((carouselIndex + 1) % carouselTotal);
+    }, 5000);
+  }
+
+  // INIT
+  if (currentUser && currentUser.isAdmin) { showPage('admin'); }
+  else if (currentUser) { showPage('app'); }
+  carouselInit();
+
+  // ==================== ADMIN ====================
+  window.switchAdminPage = switchAdminPage;
+  window.adminAddAdventure = adminAddAdventure;
+  window.adminDeleteAdventure = adminDeleteAdventure;
+  window.openMetaModal = openMetaModal;
+  window.closeMetaModal = closeMetaModal;
+  window.saveSlideMeta = saveSlideMeta;
+  window.adminDeleteSlide = adminDeleteSlide;
+
+  function switchAdminPage(name) {
+    document.getElementById('admin-page-adventures').style.display = name === 'adventures' ? 'block' : 'none';
+    document.getElementById('admin-page-photos').style.display = name === 'photos' ? 'block' : 'none';
+    document.querySelectorAll('.admin-nav-tabs .nav-tab').forEach(function(t) { t.classList.remove('active'); });
+    var tab = document.getElementById('admin-tab-' + name);
+    if (tab) tab.classList.add('active');
+    if (name === 'adventures') renderAdminAdventures();
+    if (name === 'photos') renderAdminPhotos();
+  }
+
+  function renderAdminAdventures() {
+    var list = document.getElementById('admin-adv-list');
+    list.innerHTML = '';
+    if (!ADVENTURES.length) { list.innerHTML = '<p style="color:var(--muted);font-size:14px;">No adventures yet. Add one above!</p>'; return; }
+    ADVENTURES.forEach(function(adv) {
+      var diffMap = {easy:'Beginner',moderate:'Moderate',hard:'Advanced'};
+      var item = document.createElement('div');
+      item.className = 'admin-adv-item';
+      item.innerHTML =
+        '<div class="admin-adv-item-info">' +
+          '<div class="admin-adv-item-title">' + adv.title + '</div>' +
+          '<div class="admin-adv-item-meta">📍 ' + adv.location + ' &nbsp;·&nbsp; 📅 ' + adv.date + ' &nbsp;·&nbsp; ' + (diffMap[adv.difficulty]||adv.difficulty) + ' &nbsp;·&nbsp; ' + adv.spots + ' spots</div>' +
+        '</div>' +
+        '<div class="admin-adv-item-actions">' +
+          '<div class="admin-adv-item-price">ZMW ' + adv.price.toLocaleString() + '</div>' +
+          '<button class="btn-admin-danger" onclick="adminDeleteAdventure(' + adv.id + ')">🗑 Remove</button>' +
+        '</div>';
+      list.appendChild(item);
+    });
+  }
+
+  function adminAddAdventure() {
+    var title = document.getElementById('adv-title').value.trim();
+    var desc = document.getElementById('adv-desc').value.trim();
+    var location = document.getElementById('adv-location').value.trim();
+    var date = document.getElementById('adv-date').value.trim();
+    var duration = document.getElementById('adv-duration').value.trim() || '6 hours';
+    var distance = document.getElementById('adv-distance').value.trim() || '10 km';
+    var difficulty = document.getElementById('adv-difficulty').value;
+    var spots = parseInt(document.getElementById('adv-spots').value) || 12;
+    var price = parseFloat(document.getElementById('adv-price').value);
+    var transport = parseFloat(document.getElementById('adv-transport').value) || 80;
+    var sky = document.getElementById('adv-color-sky').value;
+    var bg = document.getElementById('adv-color-bg').value;
+    var accent = document.getElementById('adv-color-accent').value;
+    var diffLabels = {easy:'Beginner Friendly',moderate:'Moderate Challenge',hard:'Advanced Trek'};
+    if (!title || !desc || !location || !date || isNaN(price)) {
+      alert('Please fill in Title, Description, Location, Date, and Price.'); return;
+    }
+    var newAdv = {
+      id: Date.now(),
+      title: title, location: location, date: date, duration: duration,
+      distance: distance, difficulty: difficulty, diffLabel: diffLabels[difficulty],
+      price: price, transportFee: transport, spots: spots, desc: desc,
+      theme: {bg: bg, accent: accent, sky: sky}
+    };
+    ADVENTURES.push(newAdv);
+    saveAdventures();
+    // Clear form
+    ['adv-title','adv-desc','adv-location','adv-date','adv-duration','adv-distance','adv-spots','adv-price','adv-transport'].forEach(function(id){
+      document.getElementById(id).value = '';
+    });
+    renderAdminAdventures();
+    var toast = document.getElementById('adv-toast');
+    toast.style.display = 'block';
+    setTimeout(function(){ toast.style.display = 'none'; }, 3000);
+  }
+
+  function adminDeleteAdventure(id) {
+    if (!confirm('Remove this adventure? This cannot be undone.')) return;
+    ADVENTURES = ADVENTURES.filter(function(a){ return a.id !== id; });
+    saveAdventures();
+    renderAdminAdventures();
+  }
+
+  function saveAdventures() {
+    localStorage.setItem('ecotrek_adventures', JSON.stringify(ADVENTURES));
+  }
+
+  // ---- Photo / Carousel Admin ----
+  // slideData is already defined above; mirror it via storage
+  function loadSlideData() {
+    var stored = localStorage.getItem('ecotrek_slides');
+    if (stored) { slideData = JSON.parse(stored); carouselTotal = slideData.length; }
+  }
+  function saveSlideData() {
+    localStorage.setItem('ecotrek_slides', JSON.stringify(slideData));
+  }
+
+  function renderAdminPhotos() {
+    var grid = document.getElementById('admin-photo-grid');
+    grid.innerHTML = '';
+    slideData.forEach(function(slide, idx) {
+      var slot = document.createElement('div');
+      slot.className = 'admin-photo-slot';
+      var imgSrc = slide.src || '';
+      slot.innerHTML =
+        (imgSrc ? '<img src="' + imgSrc + '" alt="slide">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;">🖼️</div>') +
+        '<div class="admin-photo-slot-tag">' + (slide.tag||'').replace(/^[^ ]+ /,'') + '</div>' +
+        '<div class="admin-photo-slot-overlay">' +
+          '<button class="admin-photo-edit-meta" onclick="openMetaModal(' + idx + ')">✏️ Edit</button>' +
+          '<button class="admin-photo-delete" onclick="adminDeleteSlide(' + idx + ')">🗑 Remove</button>' +
+        '</div>';
+      grid.appendChild(slot);
+    });
+    // Add new slot
+    var addBtn = document.createElement('div');
+    addBtn.className = 'admin-add-photo-btn';
+    addBtn.innerHTML = '<span>+</span>Add Photo<input type="file" accept="image/*" onchange="adminAddPhoto(this)">';
+    grid.appendChild(addBtn);
+  }
+
+  window.adminAddPhoto = function(input) {
+    var file = input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var src = e.target.result;
+      var name = file.name.replace(/\.[^.]+$/,'');
+      slideData.push({
+        src: src,
+        tag: '📸 New Upload · ' + new Date().toLocaleDateString('en-GB',{month:'short',year:'numeric'}),
+        title: name,
+        sub: 'Another great adventure captured.'
+      });
+      carouselTotal = slideData.length;
+      saveSlideData();
+      rebuildCarousel();
+      renderAdminPhotos();
+      var toast = document.getElementById('photo-toast');
+      toast.style.display = 'block';
+      setTimeout(function(){ toast.style.display = 'none'; }, 3000);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  function adminDeleteSlide(idx) {
+    if (slideData.length <= 1) { alert('You must keep at least one slide.'); return; }
+    if (!confirm('Remove this slide from the carousel?')) return;
+    slideData.splice(idx, 1);
+    carouselTotal = slideData.length;
+    if (carouselIndex >= carouselTotal) carouselIndex = carouselTotal - 1;
+    saveSlideData();
+    rebuildCarousel();
+    renderAdminPhotos();
+  }
+
+  function openMetaModal(idx) {
+    var slide = slideData[idx];
+    document.getElementById('edit-slide-idx').value = idx;
+    document.getElementById('edit-tag').value = slide.tag || '';
+    document.getElementById('edit-title').value = (slide.title||'').replace(/<br>/g,' ');
+    document.getElementById('edit-sub').value = slide.sub || '';
+    document.getElementById('admin-meta-modal').classList.add('open');
+  }
+
+  function closeMetaModal() {
+    document.getElementById('admin-meta-modal').classList.remove('open');
+  }
+
+  function saveSlideMeta() {
+    var idx = parseInt(document.getElementById('edit-slide-idx').value);
+    slideData[idx].tag = document.getElementById('edit-tag').value.trim();
+    slideData[idx].title = document.getElementById('edit-title').value.trim();
+    slideData[idx].sub = document.getElementById('edit-sub').value.trim();
+    saveSlideData();
+    rebuildCarousel();
+    renderAdminPhotos();
+    closeMetaModal();
+  }
+
+  function rebuildCarousel() {
+    var track = document.getElementById('carousel-track');
+    if (!track) return;
+    track.innerHTML = '';
+    slideData.forEach(function(slide, i) {
+      var div = document.createElement('div');
+      div.className = 'carousel-slide';
+      div.id = 'slide-' + i;
+      if (slide.src) {
+        div.innerHTML = '<img class="slide-img" src="' + slide.src + '" alt="slide ' + i + '">' +
+          '<div class="carousel-overlay"></div>';
+      } else {
+        div.innerHTML = '<div style="width:100%;height:100%;background:linear-gradient(160deg,#0d1f16,#1a3a2a);"></div>' +
+          '<div class="carousel-overlay"></div>';
+      }
+      div.innerHTML += '<div class="carousel-caption">' +
+        '<div class="carousel-caption-tag">' + (slide.tag||'') + '</div>' +
+        '<div class="carousel-caption-title">' + (slide.title||'') + '</div>' +
+        '<div class="carousel-caption-sub">' + (slide.sub||'') + '</div>' +
+        '</div>';
+      track.appendChild(div);
+    });
+    carouselIndex = 0;
+    track.style.transform = 'translateX(0)';
+    carouselInit();
+  }
+
+  // Load persisted data on boot
+  (function() {
+    var storedAdv = localStorage.getItem('ecotrek_adventures');
+    if (storedAdv) { ADVENTURES = JSON.parse(storedAdv); }
+    loadSlideData();
+  })();
+
+})();
+</script>
+</body>
+</html>
